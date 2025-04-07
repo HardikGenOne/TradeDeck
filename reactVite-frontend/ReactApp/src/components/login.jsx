@@ -1,21 +1,32 @@
 import React ,{useState} from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
+import {toast} from "react-toastify"
 function Login(){
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
-            signInWithEmailAndPassword(auth,email,password)
+            await signInWithEmailAndPassword(auth,email,password)
             console.log("User Signned In")
+            
+            toast.success("User is Logged In !!",{
+                position:"top-center"
+            })
+            window.location.href = "/profile"
         }
         catch(e){
             console.log(e.message)
 
+            toast.error(e.message,{
+                position:'bottom-center'
+            })
         }
     }
     return (
+        <>
+        <button onClick={()=>window.location.href = "/signup"}>Create an Account</button>
         <form onSubmit={handleSubmit}>
             <h3>Login</h3>
             <div className='mb-3'>
@@ -44,6 +55,7 @@ function Login(){
             </div>
 
         </form>
+        </>
     )
 }
 
