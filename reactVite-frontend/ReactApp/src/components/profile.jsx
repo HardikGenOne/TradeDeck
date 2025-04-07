@@ -1,10 +1,20 @@
 import { useEffect,useState } from "react";
 import {auth, db} from "./firebase";
 import {doc,getDoc} from "firebase/firestore";
+import DataPlot from "./plot_data"
+
+import { useNavigate } from "react-router-dom";
+
+// Inside component:
+
+
 // import {toast} from "react-toastify";
 
 function Profile(){
+    const navigate = useNavigate();
     const [userDetails,setUserDetails] = useState(null)
+    const [plotData, setPlotData] = useState(null);
+
     
     const fetchUserData = ()=>{
         auth.onAuthStateChanged(async (user) =>{
@@ -39,7 +49,26 @@ function Profile(){
             console.log(e.message)
         }
     }
+
+    const fetchDataFromBackend = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/data");
+            const data = await response.json();
+            // console.log("Data from FastAPI:", data);
+            setPlotData(data)
+            navigate("/plot", { state: { plotData: data } });  // 👈 navigate with data
+        } catch (error) {
+            console.error("Error fetching data from backend:", error);
+        }
+        
+        
+    };
+
+
     useEffect(()=>{fetchUserData();},[]);
+
+
+    // useEffect(() => {fetchDataFromBackend();}, []);
     return (
         <div>
             {userDetails ? (
@@ -55,6 +84,8 @@ function Profile(){
             ):
             <p>Loading...</p>}
             <button onClick={signOutSession}>Sign Out</button>
+            <button onClick={(fetchDataFromBackend)}>Plot Data</button>
+            {plotData && <DataPlot data={plotData} />}
         </div>
     )
 }
