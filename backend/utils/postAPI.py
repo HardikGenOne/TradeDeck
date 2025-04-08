@@ -50,7 +50,8 @@ def postData():
     data = pd.read_csv(csv_path)
     data['Date'] = pd.to_datetime(data['Date']).dt.strftime('%Y-%m-%d %H:%M')
     # data = pd.read_csv(csv_path)
-   
+    data = data.drop(columns=['Unnamed: 0'])
+    data.rename(columns={'Date':'date','Open': 'open', 'High': 'high',"Low":"low","Close":'close','volume':'volume'}, inplace=True)
     return {"dataFrame": data.to_dict(orient="records")}  # if `data` is a pandas DataFrame
     
 
