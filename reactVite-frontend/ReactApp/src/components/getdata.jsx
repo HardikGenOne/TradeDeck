@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import PlotData from './plot_data';
 export async function FetchData() {
     const res = await fetch("http://127.0.0.1:8000/data");
     const data = await res.json();
@@ -8,29 +8,50 @@ export async function FetchData() {
 
 function FetchDataComponent() {
     const [data, setData] = useState(null);
-    useEffect(() => {
-      FetchData().then(fetchedData=>{
+    // useEffect(() => {
+    //   FetchData().then(fetchedData=>{
 
-          setData(fetchedData); 
-          data => console.log(data)
-      }
-    );
-    }, []);
+    //       setData(fetchedData); 
+    //       data => console.log(data)
+    //   }
+    // );
+    // }, []);
+    useEffect(() => {
+        FetchData().then((fetchedData) => {
+          // Convert 'date' to 'time' key expected by lightweight-charts
+          const formattedData = fetchedData.dataFrame.map(item => ({
+            // time: item.date, // this is okay if your date format is 'YYYY-MM-DD'
+            time: Math.floor(new Date(item.date).getTime() / 1000), // for UNIX timestamp
+            open: item.open,
+            high: item.high,
+            low: item.low,
+            close: item.close,
+          })).sort((a, b) => a.time - b.time);
+          const deduplicatedData = formattedData.filter((item, index, self) =>
+            index === 0 || item.time !== self[index - 1].time
+          );
+      
+          // Limit to first 1000 entries
+        //   const slicedData = deduplicatedData.slice(0, 2000);
+      
+      
+          setData(deduplicatedData);
+          console.log(deduplicatedData);
+        });
+      }, []);
+    //   const readableSampleData = [
+    //     { time: '2024-04-01', open: 100, high: 110, low: 95, close: 108 },
+    //     { time: '2024-04-02', open: 108, high: 112, low: 102, close: 110 },
+    //     { time: '2024-04-03', open: 110, high: 118, low: 109, close: 117 },
+    //     { time: '2024-04-04', open: 117, high: 120, low: 111, close: 114 },
+    //     { time: '2024-04-05', open: 114, high: 115, low: 107, close: 109 },
+    //   ];
     return (
         <>
             <h2>Plot Data Page</h2>
             {data ? (
                 <div>
-                    {data.dataFrame.map((item, index) => (
-                        <div key={index} style={{ marginBottom: "10px" }}>
-                            <p><strong>Date:</strong> {item.date}</p>
-                            <p><strong>Open:</strong> {item.open}</p>
-                            <p><strong>High:</strong> {item.high}</p>
-                            <p><strong>Low:</strong> {item.low}</p>
-                            <p><strong>Close:</strong> {item.close}</p>
-                            <hr />
-                        </div>
-                    ))}
+                    <PlotData data={data} width={800} height={400} />
                 </div>
             ) : (
                 <p>Loading or no data passed...</p>
