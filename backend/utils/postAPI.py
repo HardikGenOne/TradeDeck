@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from backend.AngleSmartAPI import AngleOne_Smart_API
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,7 +23,6 @@ def home():
 
 @app.get("/data")
 def postData():
-
     # api_key = "vhAupRK9"
     # token  = "J4DWDXYMDAKVV6VFJW6RHMS3RI"
     # pwd = "7990"
@@ -54,9 +54,12 @@ def postData():
     data.rename(columns={'Date':'date','Open': 'open', 'High': 'high',"Low":"low","Close":'close','volume':'volume'}, inplace=True)
     return {"dataFrame": data.to_dict(orient="records")}  # if `data` is a pandas DataFrame
     
+class StockRequest(BaseModel):
+    symbol: str
 
-
-    
+@app.post("/stock_symbol")
+async def get_stock_symbol(req: StockRequest):
+    return {"message": f"Received: {req.symbol}"}
     
     
     

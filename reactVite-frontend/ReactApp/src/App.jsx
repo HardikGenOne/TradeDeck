@@ -17,7 +17,7 @@ function App() {
             <div className='auth-inner'>
               <h2>Hello</h2> 
               <Routes>
-                <Route path="/" element={<Login/>} />
+                <Route path="/" element={<Profile/>} />
                 <Route path = "/fetchData" element = {<FetchDataComponent/>}></Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />

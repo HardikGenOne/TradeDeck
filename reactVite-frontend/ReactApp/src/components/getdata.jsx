@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import PlotData from './plot_data';
 export async function FetchData() {
-    const res = await fetch("http://127.0.0.1:8000/data");
-    const data = await res.json();
-    return data;
+    try{
+        console.log("Loading Data")
+        const res = await fetch("http://127.0.0.1:8000/data");
+        const data = await res.json();
+        fetch("http://127.0.0.1:8000/data").then((res)=>res = res.json).then((rel)=>console.log(rel)).catch((e)=>console.log(e.message))
+        return data;
+    }
+    catch(e){
+        console.log(e.message)
+    }
 }
 
 function FetchDataComponent() {
@@ -51,7 +58,7 @@ function FetchDataComponent() {
             <h2>Plot Data Page</h2>
             {data ? (
                 <div>
-                    <PlotData data={data} width={800} height={400} />
+                    <PlotData data={data} width={1200} height={700} />
                 </div>
             ) : (
                 <p>Loading or no data passed...</p>
