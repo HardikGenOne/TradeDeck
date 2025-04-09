@@ -1,0 +1,96 @@
+.navBar {
+    position: fixed;       
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #2563eb; 
+    color: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;        
+  }
+  
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .left > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .left img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .left p {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+  }
+  
+  .left > div:last-child {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .left a {
+    text-decoration: none;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+  
+  .left a:hover {
+    color: white;
+    text-decoration: underline;
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .login, .Signup {
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .login {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .login:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  .Signup {
+    background-color: white;
+    color: #2563eb;
+  }
+  
+  .Signup:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+  } 
+
+

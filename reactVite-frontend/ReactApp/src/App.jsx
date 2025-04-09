@@ -7,7 +7,7 @@ import {ToastContainer} from "react-toastify"
 
 import FetchDataComponent from "./components/getdata"
 
-
+import Home_Page from "./components/Home_Page"
 function App() {
   return (
     <>
@@ -15,9 +15,11 @@ function App() {
         <div className="App">
           <div className='auth-wrapper'>
             <div className='auth-inner'>
-              <h2>Hello</h2> 
+              {/* <h2>Hello</h2>  */}
               <Routes>
                 <Route path="/" element={<Profile/>} />
+                <Route path="/home" element={<Home_Page/>} />
+
                 <Route path = "/fetchData" element = {<FetchDataComponent/>}></Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />

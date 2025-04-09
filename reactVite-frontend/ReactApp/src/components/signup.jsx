@@ -3,7 +3,7 @@ import {createUserWithEmailAndPassword} from "firebase/auth";
 import { auth,db } from './firebase';
 import {setDoc,doc} from "firebase/firestore"
 import { toast } from 'react-toastify';
-import "./styles/style.css"
+// import "./styles/signup.css"
 function SignUp(){
 
     const [firstName,setFirstName] = useState("");

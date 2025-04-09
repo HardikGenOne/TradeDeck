@@ -103,6 +103,6 @@ class AngleOne_Smart_API():
         
             # Move to the next period
             current_date = next_date  
-            time.sleep(2)
+            time.sleep(0.8)
         final_data.reset_index(drop=True, inplace=True)
         return final_data
