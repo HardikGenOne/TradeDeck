@@ -63,7 +63,9 @@ function FetchDataComponent() {
 
       {data ? (
         <div className="plot-wrapper">
-          <PlotData data={data} width={1200} height={700} />
+          {/* <PlotData data={data} width={1200} height={700} /> */}
+          <PlotData historicalData={data} width={1200} height={800} />
+
         </div>
       ) : (
         <p className="plot-loading">Loading or no data passed...</p>

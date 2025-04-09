@@ -279,3 +279,275 @@
         raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
             content=r.content))
     SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250409 19:29:38 smartConnect:221] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB', 'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6Ikw1MjEyODY3MyIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJ0b2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUoxYzJWeVgzUjVjR1VpT2lKamJHbGxiblFpTENKMGIydGxibDkwZVhCbElqb2lkSEpoWkdWZllXTmpaWE56WDNSdmEyVnVJaXdpWjIxZmFXUWlPakV5TENKemIzVnlZMlVpT2lJeklpd2laR1YyYVdObFgybGtJam9pTjJNMk56STVaV1l0T1dFd1lTMHpNakF6TFRneFpHWXROVGczWTJNM05qUmtaRGcySWl3aWEybGtJam9pZEhKaFpHVmZhMlY1WDNZeUlpd2liMjF1WlcxaGJtRm5aWEpwWkNJNk1USXNJbkJ5YjJSMVkzUnpJanA3SW1SbGJXRjBJanA3SW5OMFlYUjFjeUk2SW1GamRHbDJaU0o5TENKdFppSTZleUp6ZEdGMGRYTWlPaUpoWTNScGRtVWlmWDBzSW1semN5STZJblJ5WVdSbFgyeHZaMmx1WDNObGNuWnBZMlVpTENKemRXSWlPaUpNTlRJeE1qZzJOek1pTENKbGVIQWlPakUzTkRReU9UTXpOVGtzSW01aVppSTZNVGMwTkRJd05qYzNPU3dpYVdGMElqb3hOelEwTWpBMk56YzVMQ0pxZEdraU9pSTBOR1k1T0dZMk5pMWhZakZoTFRRMU5ETXRPVE15TmkwM1l6VXpPRFJtTmpBeE16TWlMQ0pVYjJ0bGJpSTZJaUo5LlV0QWRacjYtMnQxX0ZNWTI3NVRVell1VmpBcW93dWYyNGZnaDhUa3pnM2V3SE0xUkRJeW9Mb1B6Y093QzFzWFFRVko5Y09Sd1pMMmxReGQzV0gtRWVyYlVhaTYyeDIzREJObW5rOHlCUjZPbWhZX0Y2aVNGamdRRHFwV0NvZnk2NXlTbEpMMHpQS0dIaEhobEp2V0x6VDhiV0lsX0c1T3ZuNVdJUkxXRFVfVSIsIkFQSS1LRVkiOiJ2aEF1cFJLOSIsImlhdCI6MTc0NDIwNjk2MCwiZXhwIjoxNzQ0MjkzMzU5fQ.60uiDJRxSU6WMxTUHygeY3lu6UtdTebiOa65yq1DVftfdHjRJTkAEDZCjx3A1qgqp4wQLNsRkgehEjOjbMNbWA'}, Request: {'exchange': 'NSE', 'symboltoken': '3456', 'interval': 'ONE_DAY', 'fromdate': '2025-01-01 09:00', 'todate': '2025-04-01 09:16'}, Response: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+[E 250409 19:29:38 AngleSmartAPI:74] Logout failed: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+        self._validate_conn(conn)
+        ~~~~~~~~~~~~~~~~~~~^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 1093, in _validate_conn
+        conn.connect()
+        ~~~~~~~~~~~~^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 741, in connect
+        sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+            sock=sock,
+        ...<14 lines>...
+            assert_fingerprint=self.assert_fingerprint,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 920, in _ssl_wrap_socket_and_match_hostname
+        ssl_sock = ssl_wrap_socket(
+            sock=sock,
+        ...<8 lines>...
+            tls_in_tls=tls_in_tls,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/ssl_.py", line 460, in ssl_wrap_socket
+        ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/ssl_.py", line 504, in _ssl_wrap_socket_impl
+        return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/ssl.py", line 455, in wrap_socket
+        return self.sslsocket_class._create(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+            sock=sock,
+            ^^^^^^^^^^
+        ...<5 lines>...
+            session=session
+            ^^^^^^^^^^^^^^^
+        )
+        ^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/ssl.py", line 1076, in _create
+        self.do_handshake()
+        ~~~~~~~~~~~~~~~~~^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/ssl.py", line 1372, in do_handshake
+        self._sslobj.do_handshake()
+        ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+    TimeoutError: _ssl.c:1011: The handshake operation timed out
+    
+    The above exception was the direct cause of the following exception:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/adapters.py", line 667, in send
+        resp = conn.urlopen(
+            method=request.method,
+        ...<9 lines>...
+            chunked=chunked,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+        retries = retries.increment(
+            method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/retry.py", line 474, in increment
+        raise reraise(type(error), error, _stacktrace)
+              ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/util.py", line 39, in reraise
+        raise value
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+        response = self._make_request(
+            conn,
+        ...<10 lines>...
+            **response_kw,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+        raise new_e
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 466, in _make_request
+        self._raise_timeout(err=e, url=url, timeout_value=conn.timeout)
+        ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 367, in _raise_timeout
+        raise ReadTimeoutError(
+            self, url, f"Read timed out. (read timeout={timeout_value})"
+        ) from err
+    urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 71, in get_data
+        hist = self.smartApi.getCandleData(historicParam)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 465, in getCandleData
+        getCandleDataResponse=self._postRequest("api.candle.data",historicDataParams)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 222, in _request
+        raise e
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 210, in _request
+        r = requests.request(method,
+                                    url,
+        ...<5 lines>...
+                                    timeout=self.timeout,
+                                    proxies=self.proxies)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/api.py", line 59, in request
+        return session.request(method=method, url=url, **kwargs)
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/sessions.py", line 589, in request
+        resp = self.send(prep, **send_kwargs)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/sessions.py", line 703, in send
+        r = adapter.send(request, **kwargs)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/adapters.py", line 713, in send
+        raise ReadTimeout(e, request=request)
+    requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+[E 250409 21:09:48 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250409 21:21:24 smartConnect:221] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/searchScrip. Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:20', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB', 'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6Ikw1MjEyODY3MyIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJ0b2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUoxYzJWeVgzUjVjR1VpT2lKamJHbGxiblFpTENKMGIydGxibDkwZVhCbElqb2lkSEpoWkdWZllXTmpaWE56WDNSdmEyVnVJaXdpWjIxZmFXUWlPakV5TENKemIzVnlZMlVpT2lJeklpd2laR1YyYVdObFgybGtJam9pTjJNMk56STVaV1l0T1dFd1lTMHpNakF6TFRneFpHWXROVGczWTJNM05qUmtaRGcySWl3aWEybGtJam9pZEhKaFpHVmZhMlY1WDNZeUlpd2liMjF1WlcxaGJtRm5aWEpwWkNJNk1USXNJbkJ5YjJSMVkzUnpJanA3SW1SbGJXRjBJanA3SW5OMFlYUjFjeUk2SW1GamRHbDJaU0o5TENKdFppSTZleUp6ZEdGMGRYTWlPaUpoWTNScGRtVWlmWDBzSW1semN5STZJblJ5WVdSbFgyeHZaMmx1WDNObGNuWnBZMlVpTENKemRXSWlPaUpNTlRJeE1qZzJOek1pTENKbGVIQWlPakUzTkRRek1EQXlOalFzSW01aVppSTZNVGMwTkRJeE16WTROQ3dpYVdGMElqb3hOelEwTWpFek5qZzBMQ0pxZEdraU9pSTBNR1U1TldSbU5DMDBOalpsTFRSak5XTXRZVFU1WlMwd1pXVTFaRFZrTjJZMU1Ea2lMQ0pVYjJ0bGJpSTZJaUo5LnY4bEtlaS1HSWVpTzFkRWxjeHU1UEZDR2FPLUhtc2hZT29FVUlPX0VKRlNkVWhkUnpISTJYaGgwY3hNSGVQamRROWN1S0dib2dlUHcwcm9EN0hWM2E5OHZvUWRET3pwOHpJcUdLeVF6dVZhV2U4Z1UzMDA3NTAxR3JZMmF0QWV1eC00ZEpBQlV1Zm1WdE42ZHBoTllWVUxOU1JncnZ6dVBjc0pKdFBqRnpyayIsIkFQSS1LRVkiOiJ2aEF1cFJLOSIsImlhdCI6MTc0NDIxMzg3NiwiZXhwIjoxNzQ0MzAwMjY0fQ.iT13wD9PiiT3yVhROWAFENcZb8H6krAP7kfw3uOCq_-MSbHIaLWhZuHcTg7DBOmiJD-EN8wxgyuQ3Ers_cnyvg'}, Request: {'exchange': 'NSE', 'searchscrip': 'TATAMOTORS-EQ'}, Response: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+[E 250409 21:21:24 AngleSmartAPI:74] Logout failed: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+        self._validate_conn(conn)
+        ~~~~~~~~~~~~~~~~~~~^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 1093, in _validate_conn
+        conn.connect()
+        ~~~~~~~~~~~~^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 741, in connect
+        sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+            sock=sock,
+        ...<14 lines>...
+            assert_fingerprint=self.assert_fingerprint,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 920, in _ssl_wrap_socket_and_match_hostname
+        ssl_sock = ssl_wrap_socket(
+            sock=sock,
+        ...<8 lines>...
+            tls_in_tls=tls_in_tls,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/ssl_.py", line 460, in ssl_wrap_socket
+        ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/ssl_.py", line 504, in _ssl_wrap_socket_impl
+        return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/ssl.py", line 455, in wrap_socket
+        return self.sslsocket_class._create(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+            sock=sock,
+            ^^^^^^^^^^
+        ...<5 lines>...
+            session=session
+            ^^^^^^^^^^^^^^^
+        )
+        ^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/ssl.py", line 1076, in _create
+        self.do_handshake()
+        ~~~~~~~~~~~~~~~~~^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/ssl.py", line 1372, in do_handshake
+        self._sslobj.do_handshake()
+        ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+    TimeoutError: _ssl.c:1011: The handshake operation timed out
+    
+    The above exception was the direct cause of the following exception:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/adapters.py", line 667, in send
+        resp = conn.urlopen(
+            method=request.method,
+        ...<9 lines>...
+            chunked=chunked,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+        retries = retries.increment(
+            method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/retry.py", line 474, in increment
+        raise reraise(type(error), error, _stacktrace)
+              ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/util/util.py", line 39, in reraise
+        raise value
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+        response = self._make_request(
+            conn,
+        ...<10 lines>...
+            **response_kw,
+        )
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+        raise new_e
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 466, in _make_request
+        self._raise_timeout(err=e, url=url, timeout_value=conn.timeout)
+        ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 367, in _raise_timeout
+        raise ReadTimeoutError(
+            self, url, f"Read timed out. (read timeout={timeout_value})"
+        ) from err
+    urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 222, in _request
+        raise e
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 210, in _request
+        r = requests.request(method,
+                                    url,
+        ...<5 lines>...
+                                    timeout=self.timeout,
+                                    proxies=self.proxies)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/api.py", line 59, in request
+        return session.request(method=method, url=url, **kwargs)
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/sessions.py", line 589, in request
+        resp = self.send(prep, **send_kwargs)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/sessions.py", line 703, in send
+        r = adapter.send(request, **kwargs)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/requests/adapters.py", line 713, in send
+        raise ReadTimeout(e, request=request)
+    requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+[E 250409 21:38:03 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250409 21:57:19 smartConnect:221] Error occurred while making a GET request to https://apiconnect.angelone.in/rest/secure/angelbroking/user/v1/getProfile. Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:20', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB', 'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6Ikw1MjEyODY3MyIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJ0b2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUoxYzJWeVgzUjVjR1VpT2lKamJHbGxiblFpTENKMGIydGxibDkwZVhCbElqb2lkSEpoWkdWZllXTmpaWE56WDNSdmEyVnVJaXdpWjIxZmFXUWlPakV5TENKemIzVnlZMlVpT2lJeklpd2laR1YyYVdObFgybGtJam9pTjJNMk56STVaV1l0T1dFd1lTMHpNakF6TFRneFpHWXROVGczWTJNM05qUmtaRGcySWl3aWEybGtJam9pZEhKaFpHVmZhMlY1WDNZeUlpd2liMjF1WlcxaGJtRm5aWEpwWkNJNk1USXNJbkJ5YjJSMVkzUnpJanA3SW1SbGJXRjBJanA3SW5OMFlYUjFjeUk2SW1GamRHbDJaU0o5TENKdFppSTZleUp6ZEdGMGRYTWlPaUpoWTNScGRtVWlmWDBzSW1semN5STZJblJ5WVdSbFgyeHZaMmx1WDNObGNuWnBZMlVpTENKemRXSWlPaUpNTlRJeE1qZzJOek1pTENKbGVIQWlPakUzTkRRek1ESTBNekFzSW01aVppSTZNVGMwTkRJeE5UZzFNQ3dpYVdGMElqb3hOelEwTWpFMU9EVXdMQ0pxZEdraU9pSmhPR0psWXpFMk1TMDFaakl5TFRSbVpXWXRPR1JqT0MweU9HVTFaakJtTmpCaU5HSWlMQ0pVYjJ0bGJpSTZJaUo5LnRkZkhrSGdfcldMdUFyeWstS0IxV2J1N0pQN3NOR3VzamJpaks1ZmFRTWxhLUVnWDJnSkxzdDgtRExnNzQ4OFRtMlZsWFBjQzh5Y3lJZ25nR0ZPZkFRUkxwUVdMTDZJNWJCVmhLbFNSeUZhTDUycTJGVzF0RHJQVHNkM0NfOWhvZ3hwcE51TE1qaFRzUFdPRW1rVDdHWHA5c0VaaVVod19JYm8yN0VnbXpQZyIsIkFQSS1LRVkiOiJ2aEF1cFJLOSIsImlhdCI6MTc0NDIxNjAzMCwiZXhwIjoxNzQ0MzAyNDMwfQ.UNDBkQ5QNH1RqQeLTyhRceL9QZB4I0_90_AyVSxq5Igxjm79AkV9eBPGKsphuEwn8l8RaRZjEhgxdfLr135acg'}, Request: {'refreshToken': 'eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6IlJFRlJFU0gtVE9LRU4iLCJSRUZSRVNILVRPS0VOIjoiZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFjMlZ5WDNSNWNHVWlPaUpqYkdsbGJuUWlMQ0owYjJ0bGJsOTBlWEJsSWpvaWRISmhaR1ZmY21WbWNtVnphRjkwYjJ0bGJpSXNJbWR0WDJsa0lqb3dMQ0p6YjNWeVkyVWlPaUl6SWl3aVpHVjJhV05sWDJsa0lqb2lOMk0yTnpJNVpXWXRPV0V3WVMwek1qQXpMVGd4WkdZdE5UZzNZMk0zTmpSa1pEZzJJaXdpYTJsa0lqb2lkSEpoWkdWZmEyVjVYM1l5SWl3aWIyMXVaVzFoYm1GblpYSnBaQ0k2TUN3aWFYTnpJam9pYkc5bmFXNWZjMlZ5ZG1salpTSXNJbk4xWWlJNklrdzFNakV5T0RZM015SXNJbVY0Y0NJNk1UYzBORE13TWpRek1Dd2libUptSWpveE56UTBNakUxT0RVd0xDSnBZWFFpT2pFM05EUXlNVFU0TlRBc0ltcDBhU0k2SWpRMk1EWmhZMlEyTFdSa05HUXRORE0wTlMwNFpUSmtMVEEyWldSbFlUQmxZVGMwTlNJc0lsUnZhMlZ1SWpvaUluMC5ZZnIyal83UmUta2thT3dpd0VqazItQzhmT0J3TTVmaWJSVmdiQUNFdS1QY2RtUDNkU3AyTm16czhIeUJmbVBtVWpFZjcydDhqd2NGQWdNU0tNMW9QS0hBMTVvOG1aZHBEcW1BRjZhQ2xQVDRJNUE3U2tpMTlhOUktYjFrUlJWUlV4U1lfX3hLZFB1Z09GNDRwOU9rNGhqc3BPamRwMlcyWmp2dXFTSWxma3MiLCJpYXQiOjE3NDQyMTYwMzB9.p6xWGBA_9ZPon5O_bUeHu99tWD4sf30LK7qCcoxgn3wmcMk5e078kb3S3C17-Ez7pDm_GTD9eKpfy-oK0Qphuw'}, Response: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
+[E 250409 23:05:00 smartConnect:221] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/auth/angelbroking/jwt/v1/generateTokens. Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:20', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB', 'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6Ikw1MjEyODY3MyIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJ0b2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUoxYzJWeVgzUjVjR1VpT2lKamJHbGxiblFpTENKMGIydGxibDkwZVhCbElqb2lkSEpoWkdWZllXTmpaWE56WDNSdmEyVnVJaXdpWjIxZmFXUWlPakV5TENKemIzVnlZMlVpT2lJeklpd2laR1YyYVdObFgybGtJam9pTjJNMk56STVaV1l0T1dFd1lTMHpNakF6TFRneFpHWXROVGczWTJNM05qUmtaRGcySWl3aWEybGtJam9pZEhKaFpHVmZhMlY1WDNZeUlpd2liMjF1WlcxaGJtRm5aWEpwWkNJNk1USXNJbkJ5YjJSMVkzUnpJanA3SW1SbGJXRjBJanA3SW5OMFlYUjFjeUk2SW1GamRHbDJaU0o5TENKdFppSTZleUp6ZEdGMGRYTWlPaUpoWTNScGRtVWlmWDBzSW1semN5STZJblJ5WVdSbFgyeHZaMmx1WDNObGNuWnBZMlVpTENKemRXSWlPaUpNTlRJeE1qZzJOek1pTENKbGVIQWlPakUzTkRRek1EWTBPVEVzSW01aVppSTZNVGMwTkRJeE9Ua3hNU3dpYVdGMElqb3hOelEwTWpFNU9URXhMQ0pxZEdraU9pSTJPVGRrT0RGaE5TMDNaRGs1TFRReU4yUXRZV1ptWVMxa1pqZzFaR1EzWXpZelptTWlMQ0pVYjJ0bGJpSTZJaUo5LmdaS01zcjR1bnZpNjJXZTc0dm9UeUtBME9UMVgyNTlJVGVfSmdyX3V2b1pUMVB2c0h4SzU2cXExeXVVNjRyUW9MYjFzaHhueTBMcUhDWjFnbmZXUlhoOTJPcS1wQmNRMEhyMEl0Rzk2Mm5oUnNiYkM2eWFYRW9ZZlVVUVN3cGV6TS1tM1ZXcXBNdHBSTG90WEY5dXk2TGs3OVhYZGNwYUg0RGNhc1lOakpyZyIsIkFQSS1LRVkiOiJ2aEF1cFJLOSIsImlhdCI6MTc0NDIyMDA5MSwiZXhwIjoxNzQ0MzA2NDkxfQ.bznRSs71hQvtPdH3QPBfQZtIV_nsgRuTKhPHJe-2PqkxtzeJrkYbATYOKWaW1fIikssZq8uxV2J88JnwI4voYw'}, Request: {'refreshToken': 'eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6IlJFRlJFU0gtVE9LRU4iLCJSRUZSRVNILVRPS0VOIjoiZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFjMlZ5WDNSNWNHVWlPaUpqYkdsbGJuUWlMQ0owYjJ0bGJsOTBlWEJsSWpvaWRISmhaR1ZmY21WbWNtVnphRjkwYjJ0bGJpSXNJbWR0WDJsa0lqb3dMQ0p6YjNWeVkyVWlPaUl6SWl3aVpHVjJhV05sWDJsa0lqb2lOMk0yTnpJNVpXWXRPV0V3WVMwek1qQXpMVGd4WkdZdE5UZzNZMk0zTmpSa1pEZzJJaXdpYTJsa0lqb2lkSEpoWkdWZmEyVjVYM1l5SWl3aWIyMXVaVzFoYm1GblpYSnBaQ0k2TUN3aWFYTnpJam9pYkc5bmFXNWZjMlZ5ZG1salpTSXNJbk4xWWlJNklrdzFNakV5T0RZM015SXNJbVY0Y0NJNk1UYzBORE13TmpRNU1Td2libUptSWpveE56UTBNakU1T1RFeExDSnBZWFFpT2pFM05EUXlNVGs1TVRFc0ltcDBhU0k2SWpJM01HRXpNMkl3TFdWbVpESXROR0UwTmkwNFpHSTBMVFU1WWpGbU56SXhZMkUwWVNJc0lsUnZhMlZ1SWpvaUluMC50WUo0UERLSVJYRlRoVlh5cjdCTkFMWUhEa0kzVFh3WkloLURReERLcTd3aXNPMWVWSS16U2R6LWpBajJzVTBlYmNsdWhtUDZsbV9aU3k5dnoySllKanlJVkQ3SlA2YTQxRjBRcHdDUE96dVZucWJvOEF5eXlYaFo1YUE5ckJTdS1BNVQxNG1vdWZpMHRSbnFmTmQ0ZTdteV8zN2tDQXJ5clpkazVyLVUwdzgiLCJpYXQiOjE3NDQyMjAwOTF9.RafadvLxNX5hM8nXDxmenNXHK7wlkkxnDOxLBalOqwr4ifl94pieUo-elEyZRn3s7rFz6hkao127TAyIzXKkEA'}, Response: HTTPSConnectionPool(host='apiconnect.angelone.in', port=443): Read timed out. (read timeout=7)
