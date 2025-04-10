@@ -3,8 +3,14 @@ from backend.AngleSmartAPI import AngleOne_Smart_API
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import datetime
+from datetime import datetime,timedelta
+import yfinance as yf
+from fastapi import FastAPI
+
 import pandas as pd
 import os 
+import requests
 app = FastAPI()
 
 current_stock = ""
@@ -12,10 +18,21 @@ interval = ""
 start_date = ""
 processed_data = {}
 
-# Allow requests from any frontend (you can restrict later)
+# # Allow requests from any frontend (you can restrict later)
+# app.add_middleware(
+#     CORSMiddleware,
+#     # allow_origins=["*"],  # or ["http://127.0.0.1:5500"] for more security
+#     allow_origins=["http://localhost:5173"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or ["http://127.0.0.1:5500"] for more security
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,8 +81,54 @@ async def get_stock_symbol(req: StockRequest):
     interval = req.interval
     start_date = req.start_date
     
-    
     return {"message": f"Received: {req.symbol}, interval: {interval}, start_date: {start_date}"}
+
+
+@app.get("/stock/{symbol}/info")
+def get_ltp_info(symbol: str):
+    try:
+        symbol = symbol.upper() + ".NS"
+        ticker = yf.Ticker(symbol)
+
+        today = datetime.now().date()
+        one_day_ago = today - timedelta(days=1)
+        one_week_ago = today - timedelta(days=7)
+        one_month_ago = today - timedelta(days=30)
+
+        hist = ticker.history(start=one_month_ago, interval="1d")
+
+        if hist.empty:
+            return {"error": "No data found for symbol"}
+
+        hist = hist.dropna(subset=["Close"])
+
+        latest_price = hist["Close"].iloc[-1]
+        close_day = hist["Close"].iloc[-2] if len(hist) >= 2 else latest_price
+        close_week = hist.loc[hist.index >= str(one_week_ago), "Close"].iloc[0] if len(hist.loc[hist.index >= str(one_week_ago)]) > 0 else latest_price
+        close_month = hist["Close"].iloc[0]
+
+        def calc_change(current, previous):
+            change = current - previous
+            percent = (change / previous) * 100 if previous != 0 else 0
+            return round(change, 2), round(percent, 2)
+
+        day_change, day_percent = calc_change(latest_price, close_day)
+        week_change, week_percent = calc_change(latest_price, close_week)
+        month_change, month_percent = calc_change(latest_price, close_month)
+
+        return {
+            "symbol": symbol.replace(".NS", ""),
+            "ltp": round(latest_price, 2),
+            "day": {"change": day_change, "percent": day_percent},
+            "week": {"change": week_change, "percent": week_percent},
+            "month": {"change": month_change, "percent": month_percent}
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+        
+    
+    
     
     
     

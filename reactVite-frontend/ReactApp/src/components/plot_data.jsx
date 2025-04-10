@@ -57,7 +57,7 @@ const PlotData = ({ historicalData }) => {
     historicalData && historicalData.length > 0 ? (
       <div
         ref={chartContainerRef}
-        style={{ width: '900px', height: '100%' }}
+        style={{ width: '100%', height: '100%' }}
       />
     ) : (
       <p>No Data</p>

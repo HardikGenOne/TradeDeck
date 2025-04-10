@@ -17,7 +17,7 @@ function App() {
             <div className='auth-inner'>
               {/* <h2>Hello</h2>  */}
               <Routes>
-                <Route path="/" element={<Profile/>} />
+                <Route path="/" element={<Home_Page/>} />
                 <Route path="/home" element={<Home_Page/>} />
 
                 <Route path = "/fetchData" element = {<FetchDataComponent/>}></Route>
