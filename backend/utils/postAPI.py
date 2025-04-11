@@ -129,7 +129,57 @@ def get_ltp_info(symbol: str):
         
     
     
-    
-    
-    
-    
+@app.get("/major_indices")
+async def get_majorIndices_price():
+    try:
+        symbols = {
+            "NIFTY50": "^NSEI",
+            "BANKNIFTY": "^NSEBANK",
+            "SENSEX": "^BSESN"
+        }
+
+        results = []
+
+        for name, yf_symbol in symbols.items():
+            ticker = yf.Ticker(yf_symbol)
+
+            today = datetime.now().date()
+            one_day_ago = today - timedelta(days=1)
+            one_week_ago = today - timedelta(days=7)
+            one_month_ago = today - timedelta(days=30)
+
+            hist = ticker.history(start=one_month_ago, interval="1d")
+
+            if hist.empty:
+                results.append({"symbol": name, "error": "No data found"})
+                continue
+
+            hist = hist.dropna(subset=["Close"])
+
+            latest_price = hist["Close"].iloc[-1]
+            close_day = hist["Close"].iloc[-2] if len(hist) >= 2 else latest_price
+            close_week = hist.loc[hist.index >= str(one_week_ago), "Close"].iloc[0] if len(hist.loc[hist.index >= str(one_week_ago)]) > 0 else latest_price
+            close_month = hist["Close"].iloc[0]
+
+            def calc_change(current, previous):
+                change = current - previous
+                percent = (change / previous) * 100 if previous != 0 else 0
+                return round(change, 2), round(percent, 2)
+
+            day_change, day_percent = calc_change(latest_price, close_day)
+            week_change, week_percent = calc_change(latest_price, close_week)
+            month_change, month_percent = calc_change(latest_price, close_month)
+
+            results.append({
+                "ticker": name,
+                "symbol": yf_symbol,
+                "ltp": round(latest_price, 2),
+                "day": {"change": day_change, "percent": day_percent},
+                "week": {"change": week_change, "percent": week_percent},
+                "month": {"change": month_change, "percent": month_percent}
+            })
+
+        return {"data": results}
+
+    except Exception as e:
+        return {"error": str(e)}

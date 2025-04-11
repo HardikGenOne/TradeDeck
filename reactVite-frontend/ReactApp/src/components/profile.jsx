@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
+  const [isPloted, setIsPlotted] = useState(false)
   const [loading, setLoading] = useState(true);
 
   const fetchUserData = () => {
@@ -51,7 +52,7 @@ function Profile() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          symbol: stockSymbol,
+          symbol: `${stockSymbol}-EQ`,
           interval: interval,
           start_date: startDate
         })
@@ -61,6 +62,7 @@ function Profile() {
 
       const result = await response.json();
       console.log(result);
+      setIsPlotted(true)
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -135,7 +137,7 @@ function Profile() {
               
               <FormGroup>
                 <Input 
-                  type="text" 
+                  type="date" 
                   placeholder="Starting Date" 
                   id="dateInput"
                 />
@@ -151,7 +153,7 @@ function Profile() {
                 Sign Out
               </SecondaryButton>
               
-              <PrimaryButton onClick={() => window.location.href = "/fetchData"}>
+              <PrimaryButton onClick={() => isPloted ? window.location.href = "/fetchData": <p>Click Plot</p>}>
                 Next
               </PrimaryButton>
             </ButtonGroup>
