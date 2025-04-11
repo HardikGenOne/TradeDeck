@@ -1,0 +1,10 @@
+smartapi-python
+logzero
+pyotp
+websocket
+fastapi
+uvicorn
+yfinance
+pandas
+numpy 
+nsepy
