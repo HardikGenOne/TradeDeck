@@ -8,3 +8,7 @@ yfinance
 pandas
 numpy 
 nsepy
+httpx
+requests
+bs4 
+
