@@ -38,10 +38,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.get("/")
-def home():
-    return {"msg": "FastAPI working!"}
+def root():
+    return {"message": "Hello from root"}
 
 @app.get("/data")
 def postData():
