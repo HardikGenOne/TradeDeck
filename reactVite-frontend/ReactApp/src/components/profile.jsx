@@ -46,7 +46,7 @@ function Profile() {
     const startDate = document.getElementById("dateInput").value;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/stock_symbol", {
+      const response = await fetch("https://tradedeck.onrender.com/stock_symbol", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

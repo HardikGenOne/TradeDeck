@@ -63,7 +63,7 @@ export default function MarketOverviewSection() {
 
             try{
 
-                const response = await fetch("http://127.0.0.1:8000/major_indices")
+                const response = await fetch("https://tradedeck.onrender.com/major_indices")
                 const result = await response.json()
                 setData(result)
                 console.log(result)

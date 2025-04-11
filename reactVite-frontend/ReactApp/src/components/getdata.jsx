@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export async function FetchData() {
   try {
     console.log("Loading Data");
-    const res = await fetch("http://127.0.0.1:8000/data");
+    const res = await fetch("https://tradedeck.onrender.com/data");
     const data = await res.json();
     return data;
   } catch (e) {
