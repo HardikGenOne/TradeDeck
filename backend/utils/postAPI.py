@@ -3,6 +3,7 @@ from backend.AngleSmartAPI import AngleOne_Smart_API
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import httpx
 import datetime
 from datetime import datetime,timedelta
 import yfinance as yf
@@ -183,3 +184,5 @@ async def get_majorIndices_price():
 
     except Exception as e:
         return {"error": str(e)}
+    
+    
