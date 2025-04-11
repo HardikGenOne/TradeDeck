@@ -3612,7 +3612,7 @@ Please change the parent <Route path="${B}"> to <Route path="${B==="/"?"*":`${B}
   &:hover {
     background-color: #3658c5;
   }
-`,FU="/assets/logo-DRJ8vSCm.jpg",GU=ut.nav`
+`,FU="/TradeDeck/assets/logo-DRJ8vSCm.jpg",GU=ut.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
