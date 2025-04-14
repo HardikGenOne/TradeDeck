@@ -198,7 +198,7 @@ VALID_INDICES = [
 @app.get("/heatmap")
 async def getHeatMap():
     # concat_data = []
-    url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20100"
+    url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "Accept-Language": "en-US,en;q=0.9",
