@@ -101,7 +101,7 @@ export default function NavBar() {
           <div>
             <a href="#">Dashboard</a>
             <a href="#">Portfolio</a>
-            <a href="#">Heat Map</a>
+            <a onClick={()=>window.location.href = "/heatmap"}>Heat Map</a>
           </div>
         </LeftSection>
         <RightSection>

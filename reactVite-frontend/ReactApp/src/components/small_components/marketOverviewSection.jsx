@@ -62,7 +62,6 @@ export default function MarketOverviewSection() {
         const fetch_majorIndices=async()=>{
 
             try{
-
                 const response = await fetch("https://tradedeck.onrender.com/major_indices")
                 const result = await response.json()
                 setData(result)

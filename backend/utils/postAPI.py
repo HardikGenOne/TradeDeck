@@ -3,6 +3,7 @@ from backend.AngleSmartAPI import AngleOne_Smart_API
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import time
 import httpx
 import datetime
 from datetime import datetime,timedelta
@@ -181,4 +182,85 @@ async def get_majorIndices_price():
     except Exception as e:
         return {"error": str(e)}
     
+VALID_INDICES = [
+    "NIFTY 50",
+    "NIFTY BANK",
+    "NIFTY IT",
+    "NIFTY FMCG",
+    "NIFTY MIDCAP 50",
+    "NIFTY MIDCAP 100",
+    "NIFTY NEXT 50",
+    "NIFTY 100",
+    "NIFTY 200",
+    "NIFTY 500"
+]
+
+@app.get("/heatmap")
+async def getHeatMap():
+    # concat_data = []
+    url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2010git0"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept": "application/json",
+        "Referer": "https://www.nseindia.com/"
+    }
+
+    session = requests.Session()
+    session.headers.update(headers)
+    response = session.get(url)
+    # You also need to make a call to the homepage to set cookies
+    session.get("https://www.nseindia.com")
+    data = response.json()
     
+    return data
+    # for sym in VALID_INDICES:
+    #     temp = sym.replace(' ', "%20")
+    #     url = f"https://www.nseindia.com/api/equity-stockIndices?index={temp}"
+    #     retries = 5
+    #     success = False
+    #     last_error = ""
+
+    #     for attempt in range(retries):
+    #         try:
+    #             response = session.get(url)
+    #             if response.status_code == 200:
+    #                 data = response.json()
+    #                 concat_data.append({"index": sym, "data": data})
+    #                 success = True
+    #                 break
+    #             else:
+    #                 last_error = f"Status Code: {response.status_code}"
+    #         except Exception as e:
+    #             last_error = str(e)
+            
+    #         time.sleep(1.5)  # polite retry wait
+
+    #     if not success:
+    #         concat_data.append({"index": sym, "error": last_error, "url": url})
+# from fastapi import Query
+
+# @app.get("/heatmap")
+# async def getHeatMap(index_name: str = Query("NIFTY 100")):
+#     try:
+#         index_encoded = index_name.replace(" ", "%20")
+#         url = f"https://www.nseindia.com/api/equity-stockIndices?index={index_encoded}"
+        
+#         headers = {
+#             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+#             "Accept-Language": "en-US,en;q=0.9",
+#             "Accept": "application/json",
+#             "Referer": "https://www.nseindia.com/"
+#         }
+
+#         session = requests.Session()
+#         session.headers.update(headers)
+
+#         session.get("https://www.nseindia.com")  # To set cookies
+#         response = session.get(url)
+
+#         return response.json()
+
+#     except Exception as e:
+#         return {"error": str(e)}
+        

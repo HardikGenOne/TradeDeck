@@ -8,6 +8,7 @@ import {ToastContainer} from "react-toastify"
 import FetchDataComponent from "./components/getdata"
 
 import Home_Page from "./components/Home_Page"
+import Heatmap from './components/heatmap';
 function App() {
   return (
     <>
@@ -21,6 +22,9 @@ function App() {
                 <Route path="/home" element={<Home_Page/>} />
 
                 <Route path = "/fetchData" element = {<FetchDataComponent/>}></Route>
+                <Route path="/heatmap" element={<Heatmap/>} />
+
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<Profile />} />
