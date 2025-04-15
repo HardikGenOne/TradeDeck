@@ -197,23 +197,33 @@ VALID_INDICES = [
 
 @app.get("/heatmap")
 async def getHeatMap():
-    # concat_data = []
     url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
+    
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
         "Accept-Language": "en-US,en;q=0.9",
         "Accept": "application/json",
-        "Referer": "https://www.nseindia.com/"
+        "Referer": "https://www.nseindia.com/",
+        "Connection": "keep-alive"
     }
 
-    session = requests.Session()
-    session.headers.update(headers)
-    response = session.get(url)
-    # You also need to make a call to the homepage to set cookies
-    session.get("https://www.nseindia.com")
-    data = response.json()
+    try:
+        session = requests.Session()
+        session.headers.update(headers)
+
+        # Hit base page to set cookies properly
+        session.get("https://www.nseindia.com", timeout=5)
+        time.sleep(1.5)  # Wait for cookies to set
+
+        response = session.get(url, timeout=10)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": f"Failed to fetch: {response.status_code}", "text": response.text}
     
-    return data
+    except Exception as e:
+        return {"error": str(e)}
     # for sym in VALID_INDICES:
     #     temp = sym.replace(' ', "%20")
     #     url = f"https://www.nseindia.com/api/equity-stockIndices?index={temp}"
