@@ -9,7 +9,8 @@ export default function Heatmap() {
   useEffect(() => {
     const handleHeatMap = async () => {
       try {
-        const response = await fetch('https://tradedeck.onrender.com/heatmap');
+        // const response = await fetch('https://tradedeck.onrender.com/heatmap');
+        const response = await fetch('http://127.0.0.1:8000/heatmap');
         const result = await response.json();
         console.log("Fetched result:", result);
         if (Array.isArray(result)) {

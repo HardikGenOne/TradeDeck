@@ -197,6 +197,10 @@ VALID_INDICES = [
     "NIFTY 500"
 ]
 
+
+
+app = FastAPI()
+
 @app.get("/heatmap")
 async def getHeatMap():
     url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
@@ -209,21 +213,29 @@ async def getHeatMap():
         "Connection": "keep-alive"
     }
 
+    max_retries = 10
+    retry_delay = 2  # seconds
+
     try:
         session = requests.Session()
         session.headers.update(headers)
 
         # Hit base page to set cookies properly
         session.get("https://www.nseindia.com", timeout=5)
-        time.sleep(1.5)  # Wait for cookies to set
+        time.sleep(1.5)
 
-        response = session.get(url, timeout=10)
+        retries = 0
+        while retries < max_retries:
+            response = session.get(url, timeout=10)
 
-        if response.status_code == 200:
-            return response.json()
-        else:
-            return {"error": f"Failed to fetch: {response.status_code}", "text": response.text}
-    
+            if response.status_code == 200:
+                return response.json()
+            else:
+                retries += 1
+                time.sleep(retry_delay)
+
+        return {"error": "Failed after retries", "status_code": response.status_code, "text": response.text}
+
     except Exception as e:
         return {"error": str(e)}
     # for sym in VALID_INDICES:
