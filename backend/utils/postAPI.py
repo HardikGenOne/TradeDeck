@@ -81,7 +81,9 @@ async def get_stock_symbol(req: StockRequest):
     
     return {"message": f"Received: {req.symbol}, interval: {interval}, start_date: {start_date}"}
 
-
+@app.get("/ping")
+def ping():
+    return {"status":"alive"}
 @app.get("/stock/{symbol}/info")
 def get_ltp_info(symbol: str):
     try:
