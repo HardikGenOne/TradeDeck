@@ -197,10 +197,6 @@ VALID_INDICES = [
     "NIFTY 500"
 ]
 
-
-
-app = FastAPI()
-
 @app.get("/heatmap")
 async def getHeatMap():
     url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
