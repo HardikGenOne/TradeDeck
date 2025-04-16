@@ -1,32 +1,31 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import StockCard from './small_components/stockCard';
 import styled from 'styled-components';
 
 export default function Heatmap() {
-  let [change_data, setChangeData] = useState({})
-  let [boolNifty,setNifty50] = useState(false)
-  useEffect(() => {
-    const handleHeatMap = async () => {
-      try {
-        // const response = await fetch('https://tradedeck.onrender.com/heatmap');
-        const response = await fetch('http://127.0.0.1:8000/heatmap');
-        const result = await response.json();
-        console.log("Fetched result:", result);
-        if (Array.isArray(result)) {
-          setChangeData(result);
-        } else if (result.data && Array.isArray(result.data)) {
-          setChangeData(result.data);
-        } else {
-          console.warn("Unexpected response format:", result);
-        }
-      } catch (error) {
-        console.error("Error fetching heatmap:", error);
-      }
-    };
+  let [change_data, setChangeData] = useState({});
+  let [boolNifty, setNifty50] = useState(false);
 
-    handleHeatMap();
-  }, []); // empty dependency array to run only once
+  const handleIndexChange = async (e) => {
+    const selectedIndex = e.target.value;
+    setNifty50(true);
+    try {
+      // const response = await fetch(`http://127.0.0.1:8000/heatmap/${selectedIndex}`);
+      const response = await fetch(`https://tradedeck.onrender.com/heatmap/${selectedIndex}`);
+      const result = await response.json();
+      console.log(result)
+      if (Array.isArray(result)) {
+        setChangeData(result);
+      } else if (result.data && Array.isArray(result.data)) {
+        setChangeData(result.data);
+      } else {
+        console.warn("Unexpected response format:", result);
+      }
+    } catch (error) {
+      console.error("Error fetching heatmap:", error);
+    }
+  };
+
   return (
     <HeatmapWrapper>
       <HeatmapTitle>Nifty 50 Heatmap</HeatmapTitle>
@@ -34,9 +33,14 @@ export default function Heatmap() {
         Get a bird eye view of the performance of the Nifty 50 index through the Nifty 50 Heatmap. The Nifty 50 Heatmap gives a dynamic view of the gainers and losers in the Nifty 50 index.
       </HeatmapDescription>
       <IndexLabel>Select an Index</IndexLabel>
-      <IndexSelect onChange={(e) => setNifty50(e.target.value === "nifty50")}>
+      <IndexSelect onChange={handleIndexChange}>
         <option value="">-- Select Index --</option>
-        <option value="nifty50">NIFTY 50</option>
+        <option value="NIFTY_50">NIFTY 50</option>
+        <option value="NIFTY_100">NIFTY 100</option>
+        <option value="NIFTY_500">NIFTY 500</option>
+
+        <option value="NIFTY_BANK">NIFTY BANK</option>
+        <option value="NIFTY_IT">NIFTY IT</option>
       </IndexSelect>
 
       <StockCardGrid>
@@ -53,7 +57,7 @@ export default function Heatmap() {
 
       {boolNifty && !Array.isArray(change_data) && <p>No data available.</p>}
     </HeatmapWrapper>
-  )
+  );
 }
 
 const HeatmapWrapper = styled.div`
@@ -76,7 +80,6 @@ const HeatmapDescription = styled.p`
 
 const IndexLabel = styled.label`
   display: flex;
-  
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;

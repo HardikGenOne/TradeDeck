@@ -197,9 +197,10 @@ VALID_INDICES = [
     "NIFTY 500"
 ]
 
-@app.get("/heatmap")
-async def getHeatMap():
-    url = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
+@app.get("/heatmap/{index}")
+async def getHeatMap(index: str):
+    index = index.replace('_',"%20")
+    url = f"https://www.nseindia.com/api/equity-stockIndices?index={index}"
     
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
