@@ -17,6 +17,7 @@ function ScrollAnimation() {
                 const results = await Promise.all(
                     stocks.map(stock =>
                         fetch(`https://tradedeck.onrender.com/stock/${stock}/info`).then(res => res.json())
+                        
                     )
                 );
                 const formatted = results.map((data, index) => ({

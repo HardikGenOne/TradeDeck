@@ -55,14 +55,14 @@ const TextRed = styled.span`
 `;
 
 export default function MarketOverviewSection() {
-
     const [data,setData]= useState({})
 
     useEffect(()=>{
         const fetch_majorIndices=async()=>{
-
             try{
-                const response = await fetch("https://tradedeck.onrender.com/major_indices")
+                // const response = await fetch("https://tradedeck.onrender.com/major_indices")
+                const response = await fetch(import.meta.env.VITE_API_KEY+"/major_indices")
+
                 const result = await response.json()
                 setData(result)
                 console.log(result)
