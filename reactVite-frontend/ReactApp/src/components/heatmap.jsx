@@ -10,8 +10,8 @@ export default function Heatmap() {
     const selectedIndex = e.target.value;
     setNifty50(true);
     try {
-      // const response = await fetch(`http://127.0.0.1:8000/heatmap/${selectedIndex}`);
-      const response = await fetch(`https://tradedeck.onrender.com/heatmap/${selectedIndex}`);
+      const response = await fetch(`http://127.0.0.1:8000/heatmap/${selectedIndex}`);
+      // const response = await fetch(`https://tradedeck.onrender.com/heatmap/${selectedIndex}`);
       const result = await response.json();
       console.log(result)
       if (Array.isArray(result)) {
@@ -28,7 +28,7 @@ export default function Heatmap() {
 
   return (
     <HeatmapWrapper>
-      <HeatmapTitle>Nifty 50 Heatmap</HeatmapTitle>
+      <HeatmapTitle>All Index Heatmap</HeatmapTitle>
       <HeatmapDescription>
         Get a bird eye view of the performance of the Nifty 50 index through the Nifty 50 Heatmap. The Nifty 50 Heatmap gives a dynamic view of the gainers and losers in the Nifty 50 index.
       </HeatmapDescription>

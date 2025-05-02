@@ -210,8 +210,8 @@ async def getHeatMap(index: str):
         "Connection": "keep-alive"
     }
 
-    max_retries = 10
-    retry_delay = 2  # seconds
+    max_retries = 15
+    retry_delay = 3  # seconds
 
     try:
         session = requests.Session()
