@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TrendingUp, AlertTriangle } from 'lucide-react';
-import { useEffect,useState } from 'react';
+// import { useEffect,useState } from 'react';
 const SectionDark = styled.div`
   background-color: #1a202c;
   padding: 2rem;
@@ -55,26 +55,30 @@ const TextRed = styled.span`
 `;
 
 export default function MarketOverviewSection() {
-    const [data,setData]= useState({})
+    // const [data,setData]= useState({})
+    //
+    // useEffect(()=>{
+    //     const fetch_majorIndices=async()=>{
+    //         try{
+    //             // const response = await fetch("https://tradedeck.onrender.com/major_indices")
+    //             const response = await fetch(import.meta.env.VITE_API_KEY+"/major_indices")
+    //
+    //             const result = await response.json()
+    //             setData(result)
+    //             console.log(result)
+    //         }
+    //         catch(e){
+    //             console.log(e.message)
+    //         }
+    //     }
+    //     fetch_majorIndices()
+    // },{})
 
-    useEffect(()=>{
-        const fetch_majorIndices=async()=>{
-            try{
-                // const response = await fetch("https://tradedeck.onrender.com/major_indices")
-                const response = await fetch(import.meta.env.VITE_API_KEY+"/major_indices")
-
-                const result = await response.json()
-                setData(result)
-                console.log(result)
-            }
-            catch(e){
-                console.log(e.message)
-            }
-        }
-        fetch_majorIndices()
-        
-    },{})
-    
+    const dummyIndices = [
+      { symbol: "NIFTY 50", ltp: 22600, day: { percent: 0.75, change: 170 } },
+      { symbol: "BANKNIFTY", ltp: 48900, day: { percent: -0.4, change: -195 } },
+      { symbol: "FINNIFTY", ltp: 21300, day: { percent: 0.6, change: 127 } }
+    ];
 
   return (
     <SectionDark>
@@ -86,7 +90,7 @@ export default function MarketOverviewSection() {
             Indices
           </CardTitle>
           <div>
-            {Array.isArray(data.data) && data.data.slice(0, 3).map((ind, index) => (
+            {dummyIndices.map((ind, index) => (
               <React.Fragment key={index}>
                 <FlexRow>
                   <span>{ind.symbol}</span>

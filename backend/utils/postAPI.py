@@ -38,34 +38,40 @@ app.add_middleware(
 )
 @app.get("/")
 def root():
-    return {"message": "Hello from root"}
+    try:
+        return {"message": "Hello from root"}
+    except Exception as e:
+        return {"error": str(e), "detail": "Unexpected error occurred in root"}
 
 @app.get("/data")
 def postData():
     global current_stock,interval,start_date
+    try:
+        if not current_stock or not interval or not start_date:
+            return {"error": "No stock symbol set yet. or provide the required details correctly"}
 
-    if not current_stock or not interval or not start_date:
-        return {"error": "No stock symbol set yet. or provide the required details correctly"}
+        # use your API to fetch data
+        api_key = "vhAupRK9"
+        token  = "J4DWDXYMDAKVV6VFJW6RHMS3RI"
+        pwd = "7990"
+        username = "L52128673"
 
-    # use your API to fetch data
-    api_key = "vhAupRK9"
-    token  = "J4DWDXYMDAKVV6VFJW6RHMS3RI"
-    pwd = "7990"
-    username = "L52128673"
+        instance = AngleOne_Smart_API(api_key, username, pwd, token)
+        instance.connect()
 
-    instance = AngleOne_Smart_API(api_key, username, pwd, token)
-    instance.connect()
+        exchange = "NSE"
+        # interval = "FIFTEEN_MINUTE"
+        # start_date = "2024-01-01"
 
-    exchange = "NSE"
-    # interval = "FIFTEEN_MINUTE"
-    # start_date = "2024-01-01"
+        data = instance.get_FullData(exchange, current_stock, interval, start_date)
+        data['Date'] = pd.to_datetime(data['Date']).dt.strftime('%Y-%m-%d %H:%M')
+        data = data.drop(columns=['Unnamed: 0'], errors='ignore')
+        data.rename(columns={'Date':'date','Open': 'open', 'High': 'high',"Low":"low","Close":'close','volume':'volume'}, inplace=True)
 
-    data = instance.get_FullData(exchange, current_stock, interval, start_date)
-    data['Date'] = pd.to_datetime(data['Date']).dt.strftime('%Y-%m-%d %H:%M')
-    data = data.drop(columns=['Unnamed: 0'], errors='ignore')
-    data.rename(columns={'Date':'date','Open': 'open', 'High': 'high',"Low":"low","Close":'close','volume':'volume'}, inplace=True)
+        return {"symbol": current_stock, "dataFrame": data.to_dict(orient="records")}
+    except Exception as e:
+        return {"error": "Data fetch failed", "detail": str(e)}
 
-    return {"symbol": current_stock, "dataFrame": data.to_dict(orient="records")}
 class StockRequest(BaseModel):
     symbol: str
     interval: str
@@ -74,16 +80,21 @@ class StockRequest(BaseModel):
 @app.post("/stock_symbol")
 async def get_stock_symbol(req: StockRequest):
     global current_stock,interval,start_date,processed_data
-    
-    current_stock = req.symbol
-    interval = req.interval
-    start_date = req.start_date
-    
-    return {"message": f"Received: {req.symbol}, interval: {interval}, start_date: {start_date}"}
+    try:
+        current_stock = req.symbol
+        interval = req.interval
+        start_date = req.start_date
+        return {"message": f"Received: {req.symbol}, interval: {interval}, start_date: {start_date}"}
+    except Exception as e:
+        return {"error": str(e), "detail": "Unexpected error occurred in stock_symbol"}
 
 @app.get("/ping")
 def ping():
-    return {"status":"alive"}
+    try:
+        return {"status":"alive"}
+    except Exception as e:
+        return {"error": str(e), "detail": "Unexpected error occurred in ping"}
+
 @app.get("/stock/{symbol}/info")
 def get_ltp_info(symbol: str):
     try:
@@ -125,7 +136,7 @@ def get_ltp_info(symbol: str):
         }
 
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e), "detail": "Unexpected error occurred in stock_info"}
         
     
     
@@ -182,7 +193,7 @@ async def get_majorIndices_price():
         return {"data": results}
 
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e), "detail": "Unexpected error occurred in major_indices"}
     
 VALID_INDICES = [
     "NIFTY 50",
@@ -199,21 +210,21 @@ VALID_INDICES = [
 
 @app.get("/heatmap/{index}")
 async def getHeatMap(index: str):
-    index = index.replace('_',"%20")
-    url = f"https://www.nseindia.com/api/equity-stockIndices?index={index}"
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Accept": "application/json",
-        "Referer": "https://www.nseindia.com/",
-        "Connection": "keep-alive"
-    }
-
-    max_retries = 15
-    retry_delay = 3  # seconds
-
     try:
+        index = index.replace('_',"%20")
+        url = f"https://www.nseindia.com/api/equity-stockIndices?index={index}"
+        
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept": "application/json",
+            "Referer": "https://www.nseindia.com/",
+            "Connection": "keep-alive"
+        }
+
+        max_retries = 15
+        retry_delay = 3  # seconds
+
         session = requests.Session()
         session.headers.update(headers)
 
@@ -234,7 +245,7 @@ async def getHeatMap(index: str):
         return {"error": "Failed after retries", "status_code": response.status_code, "text": response.text}
 
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e), "detail": "Unexpected error occurred in heatmap"}
     # for sym in VALID_INDICES:
     #     temp = sym.replace(' ', "%20")
     #     url = f"https://www.nseindia.com/api/equity-stockIndices?index={temp}"
@@ -284,4 +295,3 @@ async def getHeatMap(index: str):
 
 #     except Exception as e:
 #         return {"error": str(e)}
-        

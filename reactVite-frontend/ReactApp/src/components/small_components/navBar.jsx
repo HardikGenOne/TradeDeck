@@ -1,6 +1,8 @@
 import React from 'react'
 import logo from "../../assets/logo.jpg"
 import styled from "styled-components"
+import { Search } from "lucide-react"
+import SearchStocks from './Search'
 
 const NavBarContainer = styled.nav`
   display: flex;
@@ -48,6 +50,38 @@ const LeftSection = styled.section`
 
       &:hover {
         color: #38bdf8;
+      }
+    }
+  }
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    background-color: #1e293b;
+    border: 1px solid #94a3b8;
+    border-radius: 8px;
+    padding: 0 10px;
+
+    svg {
+      color: #94a3b8;
+    }
+
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 8px;
+      font-size: 14px;
+      width: 180px;
+
+      &::placeholder {
+        color: #cbd5e1;
       }
     }
   }
@@ -104,6 +138,7 @@ export default function NavBar() {
             <a onClick={()=>window.location.href = "/heatmap"}>Heat Map</a>
           </div>
         </LeftSection>
+        <SearchStocks/>
         <RightSection>
           <button className='login' onClick={() => window.location.href = "/login"}>Log In</button>
           <button className='signup' onClick={() => window.location.href = "/signup"}>Sign Up</button>

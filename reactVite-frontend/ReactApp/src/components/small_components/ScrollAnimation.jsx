@@ -1,23 +1,31 @@
 import React from 'react'
 import styled, { keyframes } from "styled-components"
-import { useState, useEffect } from 'react';
+// import { useEffect } from 'react';
 
 function ScrollAnimation() {
-    const [stockData, setStockData] = useState([]);
-    const stocks = ["RELIANCE", "TATAMOTORS", "SBIN", "HSCL", "BHEL","GRASIM",
-    "ADANIENT",
-    "ADANIPORTS",
-    "BHARTIARTL",
-    "BAJAJ-AUTO",
-    "CIPLA",];
+    // const [stockData, setStockData] = useState([]);
+    const stockData = [
+        { name: "RELIANCE", ltp: 2500, percentChange: 1.2, priceChange: 30 },
+        { name: "TATAMOTORS", ltp: 350, percentChange: -0.5, priceChange: -2 },
+        { name: "SBIN", ltp: 480, percentChange: 0.8, priceChange: 4 },
+        { name: "HSCL", ltp: 120, percentChange: -1.1, priceChange: -1.3 },
+        { name: "BHEL", ltp: 65, percentChange: 0.3, priceChange: 0.2 }
+    ];
+    // const stocks = ["RELIANCE", "TATAMOTORS", "SBIN", "HSCL", "BHEL","GRASIM",
+    // "ADANIENT",
+    // "ADANIPORTS",
+    // "BHARTIARTL",
+    // "BAJAJ-AUTO",
+    // "CIPLA",];
 
+    /*
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const results = await Promise.all(
                     stocks.map(stock =>
-                        fetch(`https://tradedeck.onrender.com/stock/${stock}/info`).then(res => res.json())
-                        
+                        // fetch(`https://tradedeck.onrender.com/x/${stock}/info`).then(res => res.json())
+                        fetch(`http://127.0.0.1:8000/stock/${stock}/info`).then(res => res.json())
                     )
                 );
                 const formatted = results.map((data, index) => ({
@@ -35,6 +43,7 @@ function ScrollAnimation() {
 
         fetchData();
     }, []);
+    */
 
     return (
         <AppContainer>
@@ -67,8 +76,8 @@ const AppContainer = styled.div`
   justify-content: center;
   width: 100vw;
   padding: 10px 0;
-  border-top: 1px solid #d3d3d3;
-  border-bottom: 1px solid #d3d3d3;
+  border-top: 0.4px solid gray;
+  border-bottom: 0.4px solid gray;
 `;
 
 const Wrapper = styled.div`
