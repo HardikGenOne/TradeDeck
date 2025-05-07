@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from '../../utils/firebase';
 import { toast } from "react-toastify";
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';

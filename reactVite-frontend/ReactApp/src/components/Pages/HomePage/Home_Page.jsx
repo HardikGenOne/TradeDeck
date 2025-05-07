@@ -30,13 +30,14 @@
 // }
 
 import React from 'react';
-import NavBar from './small_components/navBar';
-import ScrollAnimation from './small_components/ScrollAnimation';
-import HeroSectionComponent from './small_components/heroSection';
-import MarketOverviewSection from './small_components/marketOverviewSection';
+import NavBar from './ShortComponents/navBar';
+import ScrollAnimation from './ShortComponents/ScrollAnimation';
+import HeroSectionComponent from './ShortComponents/heroSection';
+import MarketOverviewSection from './ShortComponents/marketOverviewSection';
 // If you have lucide-react installed, uncomment the import below
 // import { TrendingUp, PieChart, AlertTriangle, Activity } from 'lucide-react';
-import FeaturesSection from './small_components/featuresSection';
+import FeaturesSection from './ShortComponents/featuresSection';
+import Footer from '../small_components/Footer';
 
 // If you don't have lucide-react, you can use these placeholder icons
 const IconPlaceholder = ({ size = 24 }) => (
@@ -252,6 +253,7 @@ export default function Home_Page() {
           
       {/* Features Section */}
       <FeaturesSection></FeaturesSection>
+      <Footer/>
       
     </div>
   );

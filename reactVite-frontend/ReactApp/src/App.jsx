@@ -1,14 +1,15 @@
 import './App.css';
-import Login from "./components/login"
-import SignUp from "./components/signup"
-import Profile from "./components/profile"
+import Login from "./components/Pages/authPage/login"
+import SignUp from "./components/Pages/authPage/signup"
+import Profile from "./components/Pages/ProfilePage/profile"
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
 import {ToastContainer} from "react-toastify"
 
-import FetchDataComponent from "./components/getdata"
+import FetchDataComponent from "./components/utils/getdata"
 
-import Home_Page from "./components/Home_Page"
-import Heatmap from './components/heatmap';
+import Home_Page from "./components/Pages/HomePage/Home_Page"
+import Heatmap from './components/Pages/HeatmapPage/heatmap';
+import StockPage from './components/Pages/StockPage/StockPage';
 function App() {
   return (
     <>
@@ -23,6 +24,8 @@ function App() {
 
                 <Route path = "/fetchData" element = {<FetchDataComponent/>}></Route>
                 <Route path="/heatmap" element={<Heatmap/>} />
+                <Route path="/stockPage" element={<StockPage/>} />
+
 
 
                 <Route path="/login" element={<Login />} />

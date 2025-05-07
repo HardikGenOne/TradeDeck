@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Search } from 'lucide-react'
 import styled from "styled-components"
+import StockPage from '../../StockPage/StockPage';
+import { useNavigate } from 'react-router-dom';
 
 
 const SearchContainer = styled.div`
@@ -66,6 +68,7 @@ const RelativeWrapper = styled.div`
 `;
 
 function SearchStocks() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -79,14 +82,26 @@ function SearchStocks() {
     setSuggestions(
       value ? dummyStocks.filter(stock => stock.includes(value)) : []
     );
+
   };
+  function handleKeyDown(e){
+    
+      if (e.key === "Enter" && suggestions.length > 0) {
+        setQuery(suggestions[0]);
+        navigate("/stockPage", { state: { stock: suggestions[0] } });
+        setSuggestions([]);
+        e.target.blur();
+      }
+    
+
+  }
 
   return (
     <SearchContainer>
       <RelativeWrapper>
         <div>
           <Search size={18} />
-          <input type="text" placeholder="Search..." value={query} onChange={handleInputChange} ></input>
+          <input type="text" placeholder="Search..." value={query} onChange={handleInputChange} onKeyDown={handleKeyDown}></input>
         </div>
         {suggestions.length > 0 && (
           <ul className="suggestions">
@@ -94,6 +109,8 @@ function SearchStocks() {
               <li key={idx} onClick={() => {
                 setQuery(stock);
                 setSuggestions([]);
+                navigate("/stockPage",{state:stock})
+                document.activeElement.blur();
               }}>{stock}</li>
             ))}
           </ul>

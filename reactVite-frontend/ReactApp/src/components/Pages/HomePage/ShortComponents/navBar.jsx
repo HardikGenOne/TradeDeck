@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from "../../assets/logo.jpg"
+import logo from "../../../../assets/logo.jpg"
 import styled from "styled-components"
 import { Search } from "lucide-react"
-import SearchStocks from './Search'
+import SearchStocks from './SearchStocks'
 
 const NavBarContainer = styled.nav`
   display: flex;

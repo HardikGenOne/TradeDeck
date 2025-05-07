@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import StockCard from './small_components/stockCard';
+import StockCard from '../small_components/stockCard';
 import styled from 'styled-components';
 
 export default function Heatmap() {
