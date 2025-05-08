@@ -44,7 +44,7 @@ function Profile() {
     const stockSymbol = document.getElementById("symbolInput").value;
     const interval = document.getElementById("intervalInput").value;
     const startDate = document.getElementById("dateInput").value;
-
+    
     try {
       const response = await fetch("https://tradedeck.onrender.com/stock_symbol", {
         method: "POST",
@@ -83,7 +83,7 @@ function Profile() {
           <LoadingText>Loading...</LoadingText>
         ) : userDetails ? (
           <>
-            <Title>Welcome {userDetails.firstName} 👍🏻</Title>
+            <Title>Welcome {userDetails.name} 👍🏻</Title>
             
             <UserInfoSection>
               <UserInfoItem>
@@ -92,14 +92,11 @@ function Profile() {
               </UserInfoItem>
               
               <UserInfoItem>
-                <Label>First Name:</Label>
-                <Value>{userDetails.firstName}</Value>
+                <Label>Name:</Label>
+                <Value>{userDetails.name}</Value>
               </UserInfoItem>
               
-              <UserInfoItem>
-                <Label>Last Name:</Label>
-                <Value>{userDetails.lastName}</Value>
-              </UserInfoItem>
+             
             </UserInfoSection>
 
             <StockSection>
@@ -110,6 +107,7 @@ function Profile() {
                   type="text" 
                   placeholder="Enter Stock Symbol" 
                   id="symbolInput"
+                  style={{ textTransform: "uppercase" }}
                 />
               </FormGroup>
               
@@ -153,7 +151,7 @@ function Profile() {
                 Sign Out
               </SecondaryButton>
               
-              <PrimaryButton onClick={() => isPloted ? window.location.href = "/fetchData": <p>Click Plot</p>}>
+              <PrimaryButton onClick={() => isPloted ? window.location.href = "/fetchData": alert("Click Plot")}>
                 Next
               </PrimaryButton>
             </ButtonGroup>

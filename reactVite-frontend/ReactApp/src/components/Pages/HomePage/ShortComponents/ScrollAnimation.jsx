@@ -1,9 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from "styled-components"
-// import { useEffect } from 'react';
 
 function ScrollAnimation() {
-    // const [stockData, setStockData] = useState([]);
+    const navigate = useNavigate()
     const stockData = [
         { name: "RELIANCE", ltp: 2500, percentChange: 1.2, priceChange: 30 },
         { name: "TATAMOTORS", ltp: 350, percentChange: -0.5, priceChange: -2 },
@@ -11,39 +11,6 @@ function ScrollAnimation() {
         { name: "HSCL", ltp: 120, percentChange: -1.1, priceChange: -1.3 },
         { name: "BHEL", ltp: 65, percentChange: 0.3, priceChange: 0.2 }
     ];
-    // const stocks = ["RELIANCE", "TATAMOTORS", "SBIN", "HSCL", "BHEL","GRASIM",
-    // "ADANIENT",
-    // "ADANIPORTS",
-    // "BHARTIARTL",
-    // "BAJAJ-AUTO",
-    // "CIPLA",];
-
-    /*
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const results = await Promise.all(
-                    stocks.map(stock =>
-                        // fetch(`https://tradedeck.onrender.com/x/${stock}/info`).then(res => res.json())
-                        fetch(`http://127.0.0.1:8000/stock/${stock}/info`).then(res => res.json())
-                    )
-                );
-                const formatted = results.map((data, index) => ({
-                    name: stocks[index],
-                    ltp: data.ltp,
-                    percentChange: data.day.percent,
-                    priceChange: data.day.change
-                }));
-                console.log(formatted)
-                setStockData(formatted);
-            } catch (error) {
-                console.error("Error fetching stock data:", error);
-            }
-        }
-
-        fetchData();
-    }, []);
-    */
 
     return (
         <AppContainer>
@@ -52,13 +19,15 @@ function ScrollAnimation() {
                     {Array(5).fill().map((_, i) => (
                         <MarqueeGroup key={i}>
                             {stockData.map((stock, index) => (
-                                <StockBox key={index}>
-                                    {`${stock.name}: ₹${stock.ltp} (`}
-                                    <span style={{ color: stock.percentChange > 0 ? '#00c853' : '#d50000' }}>
-                                        {`${stock.percentChange > 0 ? '🟢' : '🔴'} ${stock.percentChange}%`}
-                                    </span>
-                                    {`, ₹${stock.priceChange})`}
-                                </StockBox>
+                                
+                               <StockBox key={index} onClick={() => navigate("/StockPage", { state: {"stock":stock.name} })}>
+                               {`${stock.name}: ₹${stock.ltp} (`}
+                               <span style={{ color: stock.percentChange > 0 ? '#00c853' : '#d50000' }}>
+                                 {`${stock.percentChange > 0 ? '🟢' : '🔴'} ${stock.percentChange}%`}
+                               </span>
+                               {`, ₹${stock.priceChange})`}
+                             </StockBox>
+                      
                             ))}
                         </MarqueeGroup>
                     ))}
@@ -108,8 +77,19 @@ const MarqueeGroup = styled.div`
 const StockBox = styled.div`
   font-size: 18px;
   font-weight: 500;
-  margin-right: 40px;
+  margin-right: 20px;
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.5px;
+  position: relative;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  // Pause animation on hover
+  &:hover {
+    cursor: pointer;
+    animation-play-state: paused;
+    background-color: rgba(65, 105, 225, 0.6);  // change background color on hover
+  }
 `;

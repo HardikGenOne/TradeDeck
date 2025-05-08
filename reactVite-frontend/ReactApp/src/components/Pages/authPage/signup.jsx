@@ -39,8 +39,8 @@ function SignUp() {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
           password: password,
-          firstName: firstName,
-          lastName: lastName
+          name: firstName+" "+lastName,
+
         });
       }
       console.log("user is registered !!");

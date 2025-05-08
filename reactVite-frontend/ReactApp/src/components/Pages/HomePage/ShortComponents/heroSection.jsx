@@ -68,8 +68,8 @@ function HeroSectionComponent() {
         GenOne provides AI-powered insights to help you make smarter investment decisions in the Indian stock market
       </HeroSubtitle>
       <ButtonContainer>
-        <PrimaryButton>Get Started</PrimaryButton>
-        <SecondaryButton>View Demo</SecondaryButton>
+        <PrimaryButton onClick={()=>window.location.href="/login"}>Get Started</PrimaryButton>
+        <SecondaryButton onClick={()=>window.location.href="/profile"}>View Demo</SecondaryButton>
       </ButtonContainer>
     </HeroSection>
   );

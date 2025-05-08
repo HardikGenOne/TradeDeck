@@ -4,11 +4,50 @@ import { auth } from '../../utils/firebase';
 import { toast } from "react-toastify";
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
-
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from '../../utils/firebase';
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+  
+      const userRef = doc(db, "Users", user.uid);
+      const userSnap = await getDoc(userRef);
+  
+      if (!userSnap.exists()) {
+      
+        await setDoc(userRef, {
+          name: user.displayName,
+          email: user.email,
+          createdAt: new Date(),
+          photoURL: user.photoURL,
+        });
+        console.log("User data saved to Firestore");
+      } else {
+        console.log("User already exists in Firestore");
+      }
+  
+      toast.success(`Welcome ${user.displayName}!`, {
+        position: "top-center"
+      });
+  
+      window.location.href = "/profile";
+      
+    } catch (e) {
+      console.log(e.message);
+      toast.error(e.message, {
+        position: 'bottom-center'
+      });
+    }
+  };
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -70,8 +109,8 @@ function Login() {
           <DividerLine />
         </Divider>
 
-        <GoogleSignInButton>
-          <GoogleIcon />
+        <GoogleSignInButton onClick={handleGoogleSignIn}>
+          <GoogleIcon/>
           Sign In With Google
         </GoogleSignInButton>
       </FormContainer>
