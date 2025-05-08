@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from "../../../../assets/logo.jpg"
 import styled from "styled-components"
-import { Search } from "lucide-react"
+import { Pointer, Search } from "lucide-react"
 import SearchStocks from './SearchStocks'
 
 const NavBarContainer = styled.nav`
@@ -130,7 +130,7 @@ export default function NavBar() {
         <LeftSection>
           <div>
             <img src={logo} alt='Logo' />
-            <p>GenOne Stock Analyser</p>
+            <p style={{cursor:"pointer"}} onClick={()=>window.location.href="/home"}>GenOne Stock Analyser</p>
           </div>
           <div>
             <a href="#">Dashboard</a>

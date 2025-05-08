@@ -9,6 +9,8 @@ const FooterContainer = styled.footer`
   justify-content: space-between;
   flex-wrap: wrap;
   border-top: 1px solid #2d3748;
+ 
+
 `;
 
 const FooterColumn = styled.div`

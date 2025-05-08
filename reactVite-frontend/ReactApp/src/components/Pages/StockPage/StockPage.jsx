@@ -3,14 +3,19 @@ import { useLocation } from 'react-router-dom';
 import NavBar from '../HomePage/ShortComponents/navBar';
 import Footer from '../small_components/Footer';
 import styled from 'styled-components';
+import OverviewSection from './ShortComponents/OverviewSection';
+import ProfileSection from './ShortComponents/ProfileSection';
 
 const Container = styled.div`
   background-color: #1e1f2b;
   color: white;
   font-family: Arial, sans-serif;
   padding: 20px;
-  min-height: 100vh;
+  height:auto;
+  display: flex;
+  flex-direction: column;
 `;
+
 
 const Header = styled.div`
   display: flex;
@@ -48,6 +53,7 @@ const TickerButton = styled.button`
 `;
 const Temp = styled.div`
     display:flex;
+    
 `
 const PriceSection = styled.div`
 
@@ -71,7 +77,7 @@ const Change = styled.span`
 
 const Tabs = styled.div`
   display: flex;
-  border-bottom: 2px solid #2c2d3a;
+
   flex-wrap: wrap;
 `;
 
@@ -81,6 +87,17 @@ const Tab = styled.div`
   color: ${({ active }) => (active ? "white" : "#aaa")};
   border-bottom: ${({ active }) => (active ? "3px solid white" : "none")};
 `;
+const BackgroundColor = styled.div`
+  background-color: black;
+  width: 100vw; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  margin-top:0px
+`;
+
+
+
 
 function StockPage() {
   const { state } = useLocation();
@@ -141,6 +158,11 @@ function StockPage() {
           ))}
         </Tabs>
       </Container>
+      <BackgroundColor>
+
+        {activeTab == "Overview" && <OverviewSection name = {name}/>}
+        {activeTab == "Profile" && <ProfileSection name = {name}/>}
+      </BackgroundColor>
       <Footer />
     </>
   );
