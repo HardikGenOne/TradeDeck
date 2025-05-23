@@ -153,18 +153,28 @@ function BacktestInputs() {
 
     useEffect(() => {
         async function getStrategiesFunctions() {
-            const response = await fetch(`${API_BASE_URL}/strategies/functions`)
-            const result = await response.json()
-            console.log(result)
-            setStrategiesFunctions(result)
-            if (result.length > 0) {
-                setSelectedStrategy(result[0]);
+            try {
+                const response = await fetch(`${API_BASE_URL}/strategies/functions`);
+                const result = await response.json();
+                console.log("API Response:", result);
+
+                if (Array.isArray(result)) {
+                    setStrategiesFunctions(result);
+                    if (result.length > 0) {
+                        setSelectedStrategy(result[0]);
+                    }
+                } else {
+                    console.error("Expected array but got:", typeof result);
+                    setStrategiesFunctions([]); // fallback to prevent crash
+                }
+            } catch (err) {
+                console.error("Error fetching strategies:", err);
+                setStrategiesFunctions([]);
             }
         }
 
-        getStrategiesFunctions()
-
-    }, [])
+        getStrategiesFunctions();
+    }, []);
 
     async function getOutput() {
 
@@ -267,7 +277,7 @@ function BacktestInputs() {
                 <Label>Select Strategy</Label>
                 <Select value={selectedStrategy} onChange={e => setSelectedStrategy(e.target.value)}>
                     <option value="">-- Select a strategy --</option>
-                    {strategiesFunctions.map((ele, ind) => (
+                    {Array.isArray(strategiesFunctions) && strategiesFunctions.map((ele, ind) => (
                         <option key={ind} value={ele}>{ele}</option>
                     ))}
                 </Select>
@@ -308,28 +318,28 @@ function BacktestInputs() {
             <Output>
                 <h1>OUTPUT</h1>
                 <CardsContainer>
-                {outputMessage && outputMessage["output"] && Array.isArray(outputMessage["output"]) && (
-                    <>
-                        {(() => {
-                            const cards = [];
-                            for (let i = 0; i < outputMessage["output"].length; i += 2) {
-                                const header = outputMessage["output"][i];
-                                
-                                const data = outputMessage["output"][i + 1];
-                                if (Array.isArray(header) && typeof data === "object" && data !== null) {
-                                    cards.push(
-                                        <Card key={i}>
-                                            <Preformatted>
-                                                {`${header.join("--")}\n-------------------------------------------\n${Object.entries(data).map(([key, value]) => `${key}: ${value}`).join('\n')}`}
-                                            </Preformatted>
-                                        </Card>
-                                    );
+                    {outputMessage && outputMessage["output"] && Array.isArray(outputMessage["output"]) && (
+                        <>
+                            {(() => {
+                                const cards = [];
+                                for (let i = 0; i < outputMessage["output"].length; i += 2) {
+                                    const header = outputMessage["output"][i];
+
+                                    const data = outputMessage["output"][i + 1];
+                                    if (Array.isArray(header) && typeof data === "object" && data !== null) {
+                                        cards.push(
+                                            <Card key={i}>
+                                                <Preformatted>
+                                                    {`${header.join("--")}\n-------------------------------------------\n${Object.entries(data).map(([key, value]) => `${key}: ${value}`).join('\n')}`}
+                                                </Preformatted>
+                                            </Card>
+                                        );
+                                    }
                                 }
-                            }
-                            return cards;
-                        })()}
-                    </>
-                )}
+                                return cards;
+                            })()}
+                        </>
+                    )}
                 </CardsContainer>
             </Output>
         </Wrapper>
