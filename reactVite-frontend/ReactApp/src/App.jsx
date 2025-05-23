@@ -10,6 +10,7 @@ import FetchDataComponent from "./components/utils/getdata"
 import Home_Page from "./components/Pages/HomePage/Home_Page"
 import Heatmap from './components/Pages/HeatmapPage/heatmap';
 import StockPage from './components/Pages/StockPage/StockPage';
+import BacktestInputs from './components/Pages/BacktestPage/BacktestInputs';
 function App() {
   return (
     <>
@@ -25,6 +26,8 @@ function App() {
                 <Route path = "/fetchData" element = {<FetchDataComponent/>}></Route>
                 <Route path="/heatmap" element={<Heatmap/>} />
                 <Route path="/stockPage" element={<StockPage/>} />
+                <Route path="/backtest-input" element={<BacktestInputs/>} />
+
 
 
 

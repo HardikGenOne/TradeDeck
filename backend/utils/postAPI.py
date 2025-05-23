@@ -1,7 +1,10 @@
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from backend.AngleSmartAPI import AngleOne_Smart_API
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from backend.StrategyTesting.Strategies import Strategy
+import backend.StrategyTesting.main
 
 import time
 import httpx
@@ -246,52 +249,47 @@ async def getHeatMap(index: str):
 
     except Exception as e:
         return {"error": str(e), "detail": "Unexpected error occurred in heatmap"}
-    # for sym in VALID_INDICES:
-    #     temp = sym.replace(' ', "%20")
-    #     url = f"https://www.nseindia.com/api/equity-stockIndices?index={temp}"
-    #     retries = 5
-    #     success = False
-    #     last_error = ""
 
-    #     for attempt in range(retries):
-    #         try:
-    #             response = session.get(url)
-    #             if response.status_code == 200:
-    #                 data = response.json()
-    #                 concat_data.append({"index": sym, "data": data})
-    #                 success = True
-    #                 break
-    #             else:
-    #                 last_error = f"Status Code: {response.status_code}"
-    #         except Exception as e:
-    #             last_error = str(e)
-            
-    #         time.sleep(1.5)  # polite retry wait
+@app.get("/strategies/functions")
+async def getStrategiesFunction():
+    functions = [name for name in dir(Strategy) 
+             if callable(getattr(Strategy, name)) and not name.startswith("__")]
 
-    #     if not success:
-    #         concat_data.append({"index": sym, "error": last_error, "url": url})
-# from fastapi import Query
+    return (functions)
 
-# @app.get("/heatmap")
-# async def getHeatMap(index_name: str = Query("NIFTY 100")):
-#     try:
-#         index_encoded = index_name.replace(" ", "%20")
-#         url = f"https://www.nseindia.com/api/equity-stockIndices?index={index_encoded}"
+stored_inputs = []
+
+class BacktestInput(BaseModel):
+    strategy: str
+    stocks: str
+    period: str
+    timeframes: list[str]
+
+@app.post("/strategies/functions/input")
+async def receive_backtest_input(input_data: BacktestInput):
+    stored_inputs.clear()
+    stored_inputs.append(input_data)
+    # Return something so client knows it worked
+    return JSONResponse(content={"message": "Input received", "received": input_data.dict()})
+
+@app.get("/strategies/functions/input")
+async def get_all_inputs():
+    if not stored_inputs:
+        return JSONResponse(status_code=404, content={"error": "No input data found"})
+    return stored_inputs
+
+@app.get("/strategies/functions/run")
+async def run_backtest():
+    try:
+        if not stored_inputs:
+            return JSONResponse(status_code=400, content={"error": "No input data available"})
+
+        # Convert BacktestInput Pydantic model to dict and then to list of values for get_inputs
+        checkLoad = list(stored_inputs[0].dict().values())
+        print("CheckLoad being passed to get_inputs:", checkLoad)
+        output = backend.StrategyTesting.main.process_inputs(checkLoad)
+        # output = backend.StrategyTesting.main.showOutput()
         
-#         headers = {
-#             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-#             "Accept-Language": "en-US,en;q=0.9",
-#             "Accept": "application/json",
-#             "Referer": "https://www.nseindia.com/"
-#         }
-
-#         session = requests.Session()
-#         session.headers.update(headers)
-
-#         session.get("https://www.nseindia.com")  # To set cookies
-#         response = session.get(url)
-
-#         return response.json()
-
-#     except Exception as e:
-#         return {"error": str(e)}
+        return JSONResponse(content={"message": "Backtest run successfully", "output": output})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e), "detail": "Error during backtest run"})

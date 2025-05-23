@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import StockCard from '../small_components/stockCard';
 import styled from 'styled-components';
+import NavBar from '../HomePage/ShortComponents/navBar';
+import Footer from '../small_components/Footer';
 
 export default function Heatmap() {
   let [change_data, setChangeData] = useState({});
@@ -27,6 +29,9 @@ export default function Heatmap() {
   };
 
   return (
+    <>
+    
+    <NavBar/>
     <HeatmapWrapper>
       <HeatmapTitle>All Index Heatmap</HeatmapTitle>
       <HeatmapDescription>
@@ -57,6 +62,8 @@ export default function Heatmap() {
 
       {boolNifty && !Array.isArray(change_data) && <p>No data available.</p>}
     </HeatmapWrapper>
+    <Footer/>
+    </>
   );
 }
 
