@@ -6,12 +6,15 @@ import matplotlib.pyplot as plt
 class Backtest():
     def __init__(self,df,signal_col='signal', price_col='Close'):
         self.df = df.copy()
+        self.df.index = pd.to_datetime(self.df.index)  # Force datetime index
+        self.df.sort_index(inplace=True)  # Sort ascending by date
         self.signal_col = signal_col
         assert self.signal_col in self.df.columns, f"'{self.signal_col}' not found in DataFrame columns"
         self.price_col = price_col
         self.df['strategy_returns'] = self.df[self.price_col].pct_change().shift(-1) * self.df[self.signal_col]
         self.freq = self._infer_freq()
         self.trades = self._extract_trades()
+        
     
     def _infer_freq(self):
         if isinstance(self.df.index, pd.DatetimeIndex):
@@ -65,10 +68,13 @@ class Backtest():
         return self.trades[self.trades['Return %'] < 0]['Return %'].mean()
     
     def max_profit(self):
-        return self.trades['Return %'].max()
+        profits = self.trades[self.trades['Return %']>0]["Return %"]
+        return profits.max()
 
     def max_loss(self):
-        return self.trades['Return %'].max()
+        loss = self.trades[self.trades['Return %']<0]["Return %"]
+        return loss.max()
+    
     
     def profit_factor(self):
         wins = self.trades[self.trades['Return %'] > 0]['Return %'].sum()
@@ -108,32 +114,58 @@ class Backtest():
         returns = self.df['strategy_returns'].dropna()
         cumulative_return = (1 + returns).prod()
         return (cumulative_return ** (1 / years)) - 1
+
+    def cagr_date_based(self, years):
+        """
+        Calculate CAGR for the exact date range ending at the last date in the df,
+        going back 'years' years.
+        """
+        if not isinstance(self.df.index, pd.DatetimeIndex):
+            raise ValueError("DataFrame index must be a DatetimeIndex")
+
+        end_date = self.df.index.max()
+        start_date = end_date - pd.DateOffset(years=years)
+
+        # Slice the dataframe for that date range
+        df_slice = self.df.loc[start_date:end_date]
+        
+        if df_slice.empty:
+            return np.nan  # No data in range
+
+        returns = df_slice['strategy_returns'].dropna()
+        cumulative_return = (1 + returns).prod()
+
+        # Calculate CAGR based on actual time span in years
+        actual_years = (end_date - df_slice.index.min()).days / 365.25
+        if actual_years == 0:
+            return np.nan
+
+        return (cumulative_return ** (1 / actual_years)) - 1
     
     def summary(self):
         summary_data = {
             'Total Trades': int(self.total_trades()),
-            'Win Rate': round(self.win_rate(), 2),
-            'Average Profit': round(self.average_profit(), 2),
-            'Average Loss': round(self.average_loss(), 2),
+            'Win Rate': f"{round(self.win_rate(), 2)}%",
+            'Average Profit': f"{round(self.average_profit(), 2)}%",
+            'Average Loss': f"{round(self.average_loss(), 2)}%",
             'Max Profit': round(self.max_profit(), 2),
             'Max Loss': round(self.max_loss(), 2),
             'Net PnL': round(self.netPnl(),2),
-            'Accumulative Returns': round(self.accumulative_returns(),2),
+            'Accumulative Returns': f"{round(self.accumulative_returns(),2)}%",
             'Profit Factor': round(self.profit_factor(), 2),
             'Sharpe': round(self.sharpe_ratio(), 2),
-            'Max Drawdown': round(self.max_drawdown(), 2),
+            'Max Drawdown': f"{round(self.max_drawdown(), 2)}%",
             'Max Consecutive Loss': self.consecutive_loss()
         }
 
-        trading_days = self.df['strategy_returns'].count()
-        years_available = trading_days / self.freq
+        last_date = self.df.index.max()
+        years_list = [1, 3, 5]
 
-        if years_available >= 1:
-            summary_data['CAGR 1Y'] = round(self.cagr(1) * 100, 2)
-        if years_available >= 3:
-            summary_data['CAGR 3Y'] = round(self.cagr(3) * 100, 2)
-        if years_available >= 5:
-            summary_data['CAGR 5Y'] = round(self.cagr(5) * 100, 2)
+        for y in years_list:
+            start_date = last_date - pd.DateOffset(years=y)
+            if self.df.index.min() <= start_date:
+                cagr_value = self.cagr_date_based(y) * 100
+                summary_data[f'CAGR {y}Y'] = f"{round(cagr_value, 2)}%"
 
         # Convert all NumPy types to native Python types
         summary_data = {k: float(v) if isinstance(v, (np.floating, np.integer)) else v for k, v in summary_data.items()}

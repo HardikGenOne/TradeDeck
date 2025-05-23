@@ -97,9 +97,17 @@ const Output = styled.div`
   height: 100%;
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   overflow-y: auto;
+  overflow-x: auto;
+`;
+
+const ScrollableTimeframes = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1rem;
 `;
 
 const CardsContainer = styled.div`
@@ -146,10 +154,15 @@ function BacktestInputs() {
     let [strategiesFunctions, setStrategiesFunctions] = useState([]);
     const [selectedTimeframes, setSelectedTimeframes] = useState([]);
     const [stockSymbol, setStockSymbol] = useState('');
-    const [period, setPeriod] = useState('');
+
     const [selectedStrategy, setSelectedStrategy] = useState('');
     const [loading, setLoading] = useState(false);
     const [outputMessage, setOutputMessage] = useState('');
+    const [strategyArgs, setStrategyArgs] = useState({});
+
+    const [startingDate,setStartingDate] = useState("");
+    const [endingDate,setEndingDate] = useState("")
+
 
     useEffect(() => {
         async function getStrategiesFunctions() {
@@ -161,7 +174,7 @@ function BacktestInputs() {
                 if (Array.isArray(result)) {
                     setStrategiesFunctions(result);
                     if (result.length > 0) {
-                        setSelectedStrategy(result[0]);
+                        setSelectedStrategy(result[0].name);
                     }
                 } else {
                     console.error("Expected array but got:", typeof result);
@@ -176,38 +189,24 @@ function BacktestInputs() {
         getStrategiesFunctions();
     }, []);
 
+    useEffect(() => {
+        const selected = strategiesFunctions.find(s => s.name === selectedStrategy);
+        if (selected) {
+            const newArgs = {};
+            selected.args.forEach(arg => newArgs[arg] = "");
+            setStrategyArgs(newArgs);
+        } else {
+            setStrategyArgs({});
+        }
+    }, [selectedStrategy, strategiesFunctions]);
+
     async function getOutput() {
 
         const response = await fetch(`${API_BASE_URL}/strategies/functions/run`);
         const result = await response.json();
 
-        // let output_result = []
-        // if (result && result["output"] && result["output"].length > 0) {
-        //     const symbol_timeFrame = result["output"][0];
-        //     const metrics = result["output"][1]
-        //     const formattedOutput = Object.entries(metrics)
-        //         .map(([key, value]) => {
-        //             if (typeof value === "number") {
-        //                 if (key.includes("Rate") || key.includes("CAGR") || key.includes("Drawdown")) {
-        //                     return `${key}: ${value.toFixed(2)}%`;
-        //                 }
-        //                 if (key.includes("Returns") || key.includes("Sharpe") || key.includes("Factor")) {
-        //                     return `${key}: ${value}`;
-        //                 }
-        //                 if (key.toLowerCase().includes("profit") || key.toLowerCase().includes("loss") || key === "Net PnL") {
-        //                     return `${key}: ₹${value.toFixed(2)}`;
-        //                 }
-        //             }
-        //             return `${key}: ${value}`;
-        //         })
-        //         .join("\n");
-        //     output_result.push(symbol_timeFrame)
-        //     output_result.push(formattedOutput)
         setOutputMessage(result);
         console.log(outputMessage)
-        // } else {
-        //     setOutputMessage("Waiting for data to be Fetched or No backtest data found or input is missing.");
-        // }
     }
     const handleTimeframeChange = (value) => {
         setSelectedTimeframes(prev =>
@@ -226,28 +225,30 @@ function BacktestInputs() {
         if (
             selectedStrategy.trim() === "" ||
             stockSymbol.trim() === "" ||
-            period.trim() === "" ||
-            selectedTimeframes.length === 0
+            selectedTimeframes.length === 0 ||
+            startingDate.length ===0 ||
+            Object.values(strategyArgs).some(val => val.trim() === "")
         ) {
             alert("Please fill all the inputs.");
             return;
         }
         setLoading(true);
-        // Add replace: true to ensure full replacement of previous input data
+        // Pass strategyArgs as-is, preserving user input (e.g., "21 41 51" stays as string)
         const payload = {
             strategy: selectedStrategy,
+            strategy_args: strategyArgs,
             stocks: stockSymbol,
-            period: period,
             timeframes: selectedTimeframes,
+            startingDate: startingDate,
+            endingDate: endingDate,
             replace: true
         };
         console.log({
             selectedStrategy,
             stockSymbol,
-            period,
-            selectedTimeframes
+            selectedTimeframes,
+            strategyArgs
         });
-
         try {
             const response = await fetch(`${API_BASE_URL}/strategies/functions/input`, {
                 method: 'POST',
@@ -256,17 +257,12 @@ function BacktestInputs() {
                 },
                 body: JSON.stringify(payload)
             });
-
-            // const result = await response.json();
-
         } catch (error) {
             setOutputMessage("Error: " + error.message);
         }
         finally {
             setLoading(false)
             getOutput()
-
-
         }
     }
 
@@ -278,16 +274,31 @@ function BacktestInputs() {
                 <Select value={selectedStrategy} onChange={e => setSelectedStrategy(e.target.value)}>
                     <option value="">-- Select a strategy --</option>
                     {Array.isArray(strategiesFunctions) && strategiesFunctions.map((ele, ind) => (
-                        <option key={ind} value={ele}>{ele}</option>
+                        <option key={ind} value={ele.name}>{ele.name}</option>
                     ))}
                 </Select>
+
+                {Object.entries(strategyArgs).map(([argName, value], index) => (
+                    <div key={index}>
+                        <Label>{argName}</Label>
+                        <Input
+                            placeholder={`Enter value for ${argName}`}
+                            value={strategyArgs[argName]}
+                            onChange={e => setStrategyArgs(prev => ({ ...prev, [argName]: e.target.value }))}
+                        />
+                    </div>
+                ))}
 
                 <Label>Enter Stocks</Label>
                 <Input placeholder='Stocks Symbol' value={stockSymbol} onChange={e => setStockSymbol(e.target.value)} />
 
-                <Label>Enter Period</Label>
-                <Input placeholder='Stocks Period' value={period} onChange={e => setPeriod(e.target.value)} />
-
+                <Label>Enter Starting Date</Label>
+                <Input placeholder='Enter Starting Date' value={startingDate} onChange={e => setStartingDate(e.target.value)} type = "date"/>
+                
+                <Label>Enter Ending Date</Label>
+                <Input placeholder='Enter Ending Date' value={endingDate} onChange={e => setEndingDate(e.target.value)} type = "date"/>
+                
+               
                 <Label>Select Time Frame</Label>
                 <CheckboxGroup>
                     {[
@@ -316,28 +327,45 @@ function BacktestInputs() {
             </Container>
 
             <Output>
-                <h1>OUTPUT</h1>
+                
                 <CardsContainer>
-                    {outputMessage && outputMessage["output"] && Array.isArray(outputMessage["output"]) && (
+                    {outputMessage && Array.isArray(outputMessage["output"]) && (
                         <>
-                            {(() => {
-                                const cards = [];
-                                for (let i = 0; i < outputMessage["output"].length; i += 2) {
-                                    const header = outputMessage["output"][i];
-
-                                    const data = outputMessage["output"][i + 1];
-                                    if (Array.isArray(header) && typeof data === "object" && data !== null) {
-                                        cards.push(
-                                            <Card key={i}>
-                                                <Preformatted>
-                                                    {`${header.join("--")}\n-------------------------------------------\n${Object.entries(data).map(([key, value]) => `${key}: ${value}`).join('\n')}`}
-                                                </Preformatted>
-                                            </Card>
-                                        );
-                                    }
-                                }
-                                return cards;
-                            })()}
+                            {Object.entries(outputMessage["output"].reduce((acc, curr) => {
+                                const symbol = Object.keys(curr)[0];
+                                const timeframes = curr[symbol];
+                                if (!acc[symbol]) acc[symbol] = {};
+                                Object.entries(timeframes).forEach(([tf, data]) => {
+                                    acc[symbol][tf] = data;
+                                });
+                                return acc;
+                            }, {})).map(([stockSymbol, timeframes]) => (
+                                <div key={stockSymbol} style={{ width: '100%' }}>
+                                    <h2 style={{ width: '100%', fontWeight: 'bold', fontSize: '1.5rem' }}>{stockSymbol}</h2>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                                        {Object.entries(timeframes).map(([timeframe, results], tfIndex) => (
+                                            <div key={timeframe} style={{ width: '100%' }}>
+                                                <h3 style={{ fontWeight: 'normal' }}>{timeframe}</h3>
+                                                <ScrollableTimeframes>
+                                                    {results.map((resultSet, idx) => {
+                                                        const entryKey = Object.keys(resultSet)[0];
+                                                        const entryValues = resultSet[entryKey];
+                                                        return (
+                                                            <Card key={`${timeframe}_${entryKey}_${idx}`}>
+                                                                <Preformatted>
+                                                                    <strong>{entryKey}</strong>{"\n"}
+                                                                    -----------------------------{"\n"}
+                                                                    {Object.entries(entryValues).map(([k, v]) => `${k}: ${v}`).join('\n')}
+                                                                </Preformatted>
+                                                            </Card>
+                                                        );
+                                                    })}
+                                                </ScrollableTimeframes>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                         </>
                     )}
                 </CardsContainer>

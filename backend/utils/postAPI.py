@@ -252,18 +252,32 @@ async def getHeatMap(index: str):
 
 @app.get("/strategies/functions")
 async def getStrategiesFunction():
-    functions = [name for name in dir(Strategy) 
-             if callable(getattr(Strategy, name)) and not name.startswith("__")]
+    import inspect
 
-    return (functions)
+    functions_info = []
+    for name in dir(Strategy):
+        if callable(getattr(Strategy, name)) and not name.startswith("__"):
+            func = getattr(Strategy, name)
+            sig = inspect.signature(func)
+            # Exclude 'self' and count only positional or keyword arguments
+            params = [p for p in sig.parameters.values() if p.name != 'self']
+            functions_info.append({
+                "name": name,
+                "num_args": len(params),
+                "args": [p.name for p in params]
+            })
+
+    return functions_info
 
 stored_inputs = []
 
 class BacktestInput(BaseModel):
     strategy: str
+    strategy_args: dict
     stocks: str
-    period: str
     timeframes: list[str]
+    startingDate: str
+    endingDate:str
 
 @app.post("/strategies/functions/input")
 async def receive_backtest_input(input_data: BacktestInput):
@@ -287,6 +301,7 @@ async def run_backtest():
         # Convert BacktestInput Pydantic model to dict and then to list of values for get_inputs
         checkLoad = list(stored_inputs[0].dict().values())
         print("CheckLoad being passed to get_inputs:", checkLoad)
+       
         output = backend.StrategyTesting.main.process_inputs(checkLoad)
         # output = backend.StrategyTesting.main.showOutput()
         
