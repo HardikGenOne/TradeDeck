@@ -518,3 +518,31 @@
     IndexError: list index out of range
 [E 250523 17:54:38 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'Vmv5lfbV', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '2885', 'interval': 'ONE_HOUR', 'fromdate': '2021-01-01 09:00', 'todate': '2020-10-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
 [E 250523 17:55:33 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'Vmv5lfbV', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '2885', 'interval': 'ONE_HOUR', 'fromdate': '2024-04-01 09:00', 'todate': '2024-01-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250524 04:12:03 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'

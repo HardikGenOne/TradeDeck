@@ -65,7 +65,7 @@ def process_inputs(checkLoad):
                     if strategy_method:
                         # results.append([symbol,interval])
                         # results.append(strategy_method([9,10]))
-                        results.append({symbol:{interval:strategy_method(strategy_args['shortPeriod'] ,strategy_args['longPeriod'])}})
+                        results.append({symbol:{interval:strategy_method(strategy_args)}})
                         
                     else:
                         print(f"Method {strategy[0]} not found in Strategy.")
