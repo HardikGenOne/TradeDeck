@@ -13,7 +13,7 @@ export default function Heatmap() {
     setNifty50(true);
     try {
       const response = await fetch(`https://tradedeck-backend-new.onrender.com/heatmap/${selectedIndex}`);
-      // const response = await fetch(`https://tradedeck.onrender.com/heatmap/${selectedIndex}`);
+
       const result = await response.json();
       console.log(result)
       if (Array.isArray(result)) {

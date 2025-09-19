@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Loading from './Loading';
-const WS_URL = "ws://localhost:8000/ws"; // Adjust the URL if your server is deployed
+const WS_URL = "https://tradedeck-backend-new.onrender.com/ws"; // Adjust the URL if your server is deployed
 import styled from 'styled-components';
 
 const API_BASE_URL = import.meta.env.VITE_API_KEY;
