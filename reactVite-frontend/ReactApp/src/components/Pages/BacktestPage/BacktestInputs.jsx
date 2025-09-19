@@ -3,7 +3,7 @@ import Loading from './Loading';
 const WS_URL = "https://tradedeck-backend-new.onrender.com/ws"; // Adjust the URL if your server is deployed
 import styled from 'styled-components';
 
-const API_BASE_URL = import.meta.env.VITE_API_KEY;
+// const API_BASE_URL = import.meta.env.VITE_API_KEY;
 
 
 const Wrapper = styled.div`
@@ -210,7 +210,7 @@ function BacktestInputs() {
     useEffect(() => {
         async function getStrategiesFunctions() {
             try {
-                const response = await fetch(`${API_BASE_URL}/strategies/functions`);
+                const response = await fetch(`https://tradedeck-backend-new.onrender.com/strategies/functions`);
                 const result = await response.json();
                 console.log("API Response:", result);
 
