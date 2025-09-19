@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.StrategyTesting.Strategies import Strategy
 import backend.StrategyTesting.main
+from fastapi import WebSocket
 
 import time
 import httpx
@@ -67,6 +68,7 @@ def postData():
         # start_date = "2024-01-01"
 
         data = instance.get_FullData(exchange, current_stock, interval, start_date)
+        print("Data Full Downloaded !!")
         data['Date'] = pd.to_datetime(data['Date']).dt.strftime('%Y-%m-%d %H:%M')
         data = data.drop(columns=['Unnamed: 0'], errors='ignore')
         data.rename(columns={'Date':'date','Open': 'open', 'High': 'high',"Low":"low","Close":'close','volume':'volume'}, inplace=True)
@@ -271,6 +273,30 @@ async def getStrategiesFunction():
 
 stored_inputs = []
 
+# --- WebSocket connection handler ---
+websocket_clients = []
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    websocket_clients.append(websocket)
+
+    # Set log sender in main.py
+    import backend.StrategyTesting.main as main_module
+    async def send_log_to_client(msg):
+        try:
+            await websocket.send_text(msg)
+        except:
+            pass  # Handle failed sends if needed
+    main_module.set_log_sender(send_log_to_client)
+
+    try:
+        while True:
+            await websocket.receive_text()  # Keep alive
+    except:
+        websocket_clients.remove(websocket)
+        main_module.set_log_sender(None)
+
 class BacktestInput(BaseModel):
     strategy: str
     strategy_args: dict
@@ -302,8 +328,12 @@ async def run_backtest():
         checkLoad = list(stored_inputs[0].dict().values())
         print("CheckLoad being passed to get_inputs:", checkLoad)
        
-        output = backend.StrategyTesting.main.process_inputs(checkLoad)
+        output = await backend.StrategyTesting.main.process_inputs(checkLoad)
+        # Removed sending backtest completed message
+        # await backend.StrategyTesting.main.send_log("🔚 Backtest completed successfully.")
         # output = backend.StrategyTesting.main.showOutput()
+        print("Output Recieved .. from PostAPI")
+        print(output,"Here is the OUTPUT")
         
         return JSONResponse(content={"message": "Backtest run successfully", "output": output})
     except Exception as e:
