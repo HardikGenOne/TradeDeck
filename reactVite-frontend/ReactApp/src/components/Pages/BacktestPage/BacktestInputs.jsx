@@ -1,5 +1,6 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import Loading from './Loading';
+const WS_URL = "ws://localhost:8000/ws"; // Adjust the URL if your server is deployed
 import styled from 'styled-components';
 
 const API_BASE_URL = import.meta.env.VITE_API_KEY;
@@ -165,6 +166,7 @@ const FormSection = styled.div`
   margin-bottom: 2rem;
 `;
 
+
 function BacktestInputs() {
     let [strategiesFunctions, setStrategiesFunctions] = useState([]);
     const [selectedTimeframes, setSelectedTimeframes] = useState([]);
@@ -179,6 +181,11 @@ function BacktestInputs() {
     const [endingDate,setEndingDate] = useState("")
 
     const [containerWidth, setContainerWidth] = useState(40); // percent
+
+    const [logMessages, setLogMessages] = useState([]);
+    const logRef = useRef([]);
+    const [showLoading, setShowLoading] = useState(false);
+
     const startDragging = (e) => {
       e.preventDefault();
       const startX = e.clientX;
@@ -236,6 +243,7 @@ function BacktestInputs() {
         }
     }, [selectedStrategy, strategiesFunctions]);
 
+
     async function getOutput() {
 
         const response = await fetch(`${API_BASE_URL}/strategies/functions/run`);
@@ -268,6 +276,29 @@ function BacktestInputs() {
             alert("Please fill all the inputs.");
             return;
         }
+        setShowLoading(true);
+        setLogMessages([]);
+        logRef.current = [];
+        const socket = new WebSocket(WS_URL);
+
+        socket.onopen = () => {
+            console.log("WebSocket connection opened");
+        };
+
+        socket.onmessage = (event) => {
+            console.log("WebSocket message:", event.data);
+            logRef.current = [...logRef.current, event.data];
+            setLogMessages([...logRef.current]);
+        };
+
+        socket.onerror = (err) => {
+            console.error("WebSocket error:", err);
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
         setLoading(true);
         // Pass strategyArgs as-is, preserving user input (e.g., "21 41 51" stays as string)
         const payload = {
@@ -297,8 +328,9 @@ function BacktestInputs() {
             setOutputMessage("Error: " + error.message);
         }
         finally {
-            setLoading(false)
-            getOutput()
+            setLoading(false);
+            await getOutput();
+            setShowLoading(false);
         }
     }
 
@@ -376,7 +408,6 @@ function BacktestInputs() {
             </Container>
             <ResizableDivider onMouseDown={startDragging} />
             <Output style={{ flexBasis: `${100 - containerWidth}%` }}>
-                
                 <CardsContainer>
                   {outputMessage && Array.isArray(outputMessage["output"]) && (
                     <>
@@ -415,15 +446,16 @@ function BacktestInputs() {
                                 </div>
                               );
                             })}
-                          </div>
+                           </div>
                         </div>
                       ))}
                     </>
                   )}
                 </CardsContainer>
             </Output>
+            {showLoading && <Loading messages={logMessages} />}
         </Wrapper>
     )
 }
 
-export default BacktestInputs
+export default BacktestInputs 

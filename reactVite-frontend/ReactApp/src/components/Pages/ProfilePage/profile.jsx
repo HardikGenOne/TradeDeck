@@ -46,7 +46,7 @@ function Profile() {
     const startDate = document.getElementById("dateInput").value;
     
     try {
-      const response = await fetch("https://tradedeck.onrender.com/stock_symbol", {
+      const response = await fetch("https://tradedeck-backend-new.onrender.com/stock_symbol", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

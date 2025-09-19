@@ -1,0 +1,215 @@
+[E 250530 10:30:24 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'<html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 71, in get_data
+        hist = self.smartApi.getCandleData(historicParam)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 465, in getCandleData
+        getCandleDataResponse=self._postRequest("api.candle.data",historicDataParams)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'<html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n'
+[E 250530 10:30:54 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'Vmv5lfbV', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '10666', 'interval': 'ONE_DAY', 'fromdate': '2022-07-01 09:00', 'todate': '2022-10-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 10:35:50 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'Vmv5lfbV', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '3045', 'interval': 'ONE_DAY', 'fromdate': '2024-07-01 09:00', 'todate': '2024-10-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 10:42:26 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250530 10:42:26 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250530 10:44:59 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250530 10:44:59 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250530 10:44:59 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250530 10:46:53 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'Vmv5lfbV', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '25', 'interval': 'ONE_DAY', 'fromdate': '2023-10-01 09:00', 'todate': '2024-01-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 10:46:53 AngleSmartAPI:74] Logout failed: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 230, in _request
+        data = json.loads(r.content.decode("utf8"))
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 346, in loads
+        return _default_decoder.decode(s)
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 345, in decode
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py", line 363, in raw_decode
+        raise JSONDecodeError("Expecting value", s, err.value) from None
+    json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 56, in get_data
+        token_data = self.smartApi.searchScrip(exchange, symbol)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 489, in searchScrip
+        searchScripResult = self._postRequest("api.search.scrip", params)
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 263, in _postRequest
+        return self._request(route, "POST", params)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/.venv/lib/python3.13/site-packages/SmartApi/smartConnect.py", line 233, in _request
+        raise ex.DataException("Couldn't parse the JSON response received from the server: {content}".format(
+            content=r.content))
+    SmartApi.smartExceptions.DataException: Couldn't parse the JSON response received from the server: b'Access denied because of exceeding access rate'
+[E 250530 10:58:08 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword. Error: Invalid totp. URL: https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'clientcode': 'L52128673', 'password': '7990', 'totp': '444635'}, Response: {'status': False, 'message': 'Invalid totp', 'errorcode': 'AB1050', 'data': None}
+[E 250530 10:58:08 AngleSmartAPI:37] {'status': False, 'message': 'Invalid totp', 'errorcode': 'AB1050', 'data': None}
+[E 250530 10:58:15 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword. Error: Invalid totp. URL: https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'clientcode': 'L52128673', 'password': '5689', 'totp': '444635'}, Response: {'status': False, 'message': 'Invalid totp', 'errorcode': 'AB1050', 'data': None}
+[E 250530 10:58:15 AngleSmartAPI:37] {'status': False, 'message': 'Invalid totp', 'errorcode': 'AB1050', 'data': None}
+[E 250530 11:00:37 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '25', 'interval': 'ONE_HOUR', 'fromdate': '2021-10-01 09:00', 'todate': '2022-01-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 11:01:46 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '25', 'interval': 'ONE_HOUR', 'fromdate': '2023-10-01 09:00', 'todate': '2024-01-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 11:01:56 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '25', 'interval': 'FIFTEEN_MINUTE', 'fromdate': '2020-01-01 09:00', 'todate': '2020-04-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 11:15:54 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '25', 'interval': 'ONE_DAY', 'fromdate': '2020-01-30 09:00', 'todate': '2020-04-30 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 11:30:43 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '3456', 'interval': 'ONE_DAY', 'fromdate': '2020-01-30 09:00', 'todate': '2020-04-30 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 11:35:48 smartConnect:246] Error occurred while making a POST request to https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData. Error: Something Went Wrong, Please Try After Sometime. URL: https://apiconnect.angelone.in/rest/secure/angelbroking/historical/v1/getCandleData, Headers: {'Content-type': 'application/json', 'X-ClientLocalIP': '127.0.0.1', 'X-ClientPublicIP': '106.193.147.98', 'X-MACAddress': 'fa:15:15:31:b2:22', 'Accept': 'application/json', 'X-PrivateKey': 'vhAupRK9', 'X-UserType': 'USER', 'X-SourceID': 'WEB'}, Request: {'exchange': 'NSE', 'symboltoken': '3045', 'interval': 'ONE_DAY', 'fromdate': '2022-07-01 09:00', 'todate': '2022-10-01 09:16'}, Response: {'message': 'Something Went Wrong, Please Try After Sometime', 'errorcode': 'AB1004', 'status': False, 'data': None}
+[E 250530 21:32:26 AngleSmartAPI:74] Logout failed: list index out of range
+    Traceback (most recent call last):
+      File "/Users/hmaheshwari/Documents/PROJECTS/TradingView/backend/AngleSmartAPI.py", line 58, in get_data
+        if not token_data or 'symboltoken' not in token_data["data"][0]:
+                                                  ~~~~~~~~~~~~~~~~~~^^^
+    IndexError: list index out of range
