@@ -12,7 +12,7 @@ export default function Heatmap() {
     const selectedIndex = e.target.value;
     setNifty50(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/heatmap/${selectedIndex}`);
+      const response = await fetch(`https://tradedeck-backend-new.onrender.com/heatmap/${selectedIndex}`);
       // const response = await fetch(`https://tradedeck.onrender.com/heatmap/${selectedIndex}`);
       const result = await response.json();
       console.log(result)
