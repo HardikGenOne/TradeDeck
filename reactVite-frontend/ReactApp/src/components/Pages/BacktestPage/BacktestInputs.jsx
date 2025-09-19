@@ -246,7 +246,7 @@ function BacktestInputs() {
 
     async function getOutput() {
 
-        const response = await fetch(`${API_BASE_URL}/strategies/functions/run`);
+        const response = await fetch(`https://tradedeck-backend-new.onrender.com/strategies/functions/run`);
         const result = await response.json();
 
         setOutputMessage(result);
@@ -317,7 +317,7 @@ function BacktestInputs() {
             strategyArgs
         });
         try {
-            const response = await fetch(`${API_BASE_URL}/strategies/functions/input`, {
+            const response = await fetch(`https://tradedeck-backend-new.onrender.com/strategies/functions/input`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
