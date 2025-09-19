@@ -160,8 +160,8 @@ export default function NavBar() {
             <p>GenOne Stock Analyser</p>
           </div>
           <NavLinks>
-            <a href="#">Dashboard</a>
-            <a href="#">Portfolio</a>
+            {/* <a href="#">Dashboard</a> */}
+            <a onClick={() => window.location.href = "/backtest-input"}>Backtest</a>
             <a onClick={() => window.location.href = "/heatmap"}>Heat Map</a>
           </NavLinks>
         </LeftSection>
